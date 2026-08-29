@@ -35,9 +35,17 @@
 	backdrop-filter: saturate(1.5) blur(3px);
 }
 
+.dialogBox:not(.spotlightBox) {
+	background-color: var(--nept-secondary-background) !important;
+}
+
 @media (prefers-reduced-transparency: reduce) {
 	.dialogBox {
 		backdrop-filter: none;
+	}
+
+	.dialogBox:not(.spotlightBox) {
+		background-color: var(--nept-menu-background) !important;
 	}
 }
 
@@ -46,6 +54,10 @@
 		border: 1px solid CanvasText !important;
 		box-shadow: none !important;
 		backdrop-filter: none;
+	}
+
+	.dialogBox:not(.spotlightBox) {
+		background-color: Canvas !important;
 	}
 }
 
