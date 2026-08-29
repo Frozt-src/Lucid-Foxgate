@@ -39,11 +39,10 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 
 ### Lucid Foxgate — 2026-08-28
 
-- Renamed the customized Neptune build to **Lucid Foxgate**.
 - Added a low-overhead Liquid Glass layer for the address field, horizontal tabs, vertical tabs, and pinned tabs.
 - Added short state transitions with reduced-motion handling and disabled motion during tab dragging or toolbar customization.
 - Added Mica-aware Windows popup composition plus a matching non-Mica fallback with unified corner radius, border, spacing, and shadow geometry.
-- Restored subtle popup blur while preserving solid reduced-transparency and forced-colors fallbacks.
+  subtle popup blur while preserving solid reduced-transparency and forced-colors fallbacks.
 - Rebuilt the URLbar results popup as one continuous rounded, blurred surface over both websites and internal Firefox pages.
 - Corrected URLbar suggestion/history overlap, hover contrast, result spacing, and the overly prominent Windows accent frame.
 - Reduced tab and address-field highlights for a quieter, more premium appearance.
@@ -54,7 +53,6 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 - Expanded keyboard focus, reduced-motion, reduced-transparency, and forced-colors coverage throughout the browser chrome.
 - Scoped Firefox content styling to internal pages so theme rules do not leak into ordinary websites.
 - Updated New Tab, Reader View, PDF, dialog, sidebar, button, and media-player styling.
-- Removed obsolete backup CSS, duplicate color files, legacy titlebar overrides, and unused Windows control assets from the release tree.
 - Added updated wallpapers, service-card icons, trust-state icons, translation assets, and tab-note assets.
 
 ## Roadmap
