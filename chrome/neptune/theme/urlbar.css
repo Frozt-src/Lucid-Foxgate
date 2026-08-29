@@ -201,6 +201,18 @@
 	}
 }
 
+/* Firefox 154 renders the result action menu as an HTML panel-list, outside
+ * the XUL popup rules. Give that secondary surface the same quiet material. */
+.urlbarView > .urlbarView-result-menu {
+	--panel-list-background-color: var(--nept-secondary-background) !important;
+	--panel-list-border-color: var(--nept-separator-color) !important;
+	--panel-list-border-radius: var(--border-radius-large) !important;
+	--panel-list-box-shadow: var(--nept-small-shadow), var(--nept-menu-shadow) !important;
+	--panel-list-text-color: MenuText !important;
+	color-scheme: light dark !important;
+	backdrop-filter: saturate(1) blur(3px) !important;
+}
+
 @media (prefers-reduced-transparency: reduce) {
 	#navigator-toolbox:has(.urlbar[open]:popover-open) + #browser {
 		backdrop-filter: none !important;
@@ -213,6 +225,14 @@
 
 	.urlbarView {
 		color: MenuText !important;
+		backdrop-filter: none !important;
+	}
+
+	.urlbarView > .urlbarView-result-menu {
+		--panel-list-background-color: Menu !important;
+		--panel-list-border-color: var(--nept-separator-color) !important;
+		--panel-list-box-shadow: var(--nept-small-shadow) !important;
+		--panel-list-text-color: MenuText !important;
 		backdrop-filter: none !important;
 	}
 }
@@ -234,6 +254,14 @@
 		--urlbarview-background-color-selected: Highlight !important;
 		--urlbarview-text-color-selected: HighlightText !important;
 		color: CanvasText !important;
+		backdrop-filter: none !important;
+	}
+
+	.urlbarView > .urlbarView-result-menu {
+		--panel-list-background-color: Canvas !important;
+		--panel-list-border-color: CanvasText !important;
+		--panel-list-box-shadow: none !important;
+		--panel-list-text-color: CanvasText !important;
 		backdrop-filter: none !important;
 	}
 

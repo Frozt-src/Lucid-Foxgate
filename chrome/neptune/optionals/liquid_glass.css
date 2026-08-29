@@ -144,6 +144,28 @@
 	}
 }
 
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+	@keyframes nept-liquid-tab-select {
+		0% {
+			transform: scale(.94, .86);
+		}
+
+		62% {
+			transform: scale(1.012, 1.01);
+		}
+
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	/* The visible selected capsule carries the short surface-tension settle. */
+	:root:not([customizing], :-moz-window-inactive) #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]):not([movingtab]) .tabbrowser-tab[fadein]:is([selected], [visuallyselected]):not([pinned], [multiselected], [usercontextid], [dragtarget], tab-group .tabbrowser-tab, tab-split-view-wrapper > .tabbrowser-tab) > .tab-stack > .tab-background {
+		animation: nept-liquid-tab-select 220ms var(--nept-glass-ease) both;
+		transform-origin: center;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tab-background {
 		animation: none !important;
@@ -189,5 +211,11 @@
 	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:is([selected], [visuallyselected], :focus-visible) > .tab-stack > .tab-background {
 		outline: 2px solid Highlight !important;
 		outline-offset: -2px !important;
+	}
+
+	#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab > .tab-stack > .tab-background,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab > .tab-stack > .tab-background {
+		transition: none !important;
+		transform: none !important;
 	}
 }
