@@ -1,14 +1,14 @@
 /*---------- Toolbox ----------*/
-#browser:not(.browser-toolbox-background) {
-	background-color: transparent !important;
-}
-
 #navigator-toolbox {
 	border: none !important;
 
+	&.fullscreen-with-menubar {
+		box-shadow: none !important;
+	}
+
 	#nav-bar {
 		background-color: transparent !important;
-		padding: var(--theme-browser-toolbox-padding) 0 var(--theme-browser-toolbox-padding) calc(76px + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+		padding: var(--nept-browser-toolbox-padding) 0 var(--nept-browser-toolbox-padding) calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
 		border: none !important;
 
 		:root[inFullscreen] & {
@@ -20,8 +20,8 @@
 		}
 
 		@media not -moz-pref("sidebar.verticalTabs") {
-			:root[privatebrowsingmode=temporary] & {
-				padding-inline-start: calc(76px + var(--size-item-large) + 2 * var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+			:root[privatebrowsingmode="temporary"] & {
+				padding-inline-start: calc(var(--window-controls-size) + var(--size-item-large) + 2 * var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
 			}
 		}
 
@@ -30,22 +30,40 @@
 				animation: emeTeachingMoment 1s linear infinite;
 			}
 
-			> toolbarpaletteitem[place=toolbar][id^=wrapper-customizableui-special-spring], toolbarspring:not(#vertical-spacer) {
-				:root:not([taskbartab]) & {
+			@media (min-width: 770px) {
+				toolbarpaletteitem[place=toolbar][id^=wrapper-customizableui-special-spring],
+				toolbarspring {
 					max-width: 100% !important;
-				}
 
-				#nav-bar & {
-					flex-grow: 400 !important;
+					&:where(:not(#vertical-spacer)) {
+						flex-grow: 400 !important;
+					}
+
+					@media (-moz-platform: macos) {
+						&:not(#vertical-spacer, #urlbar-container ~ toolbarspring) {
+							#nav-bar:not([customizing]) & {
+								flex-grow: 240 !important;
+							}
+
+							#nav-bar:not([customizing]):is([downloadsbuttonshown], [unifiedextensionsbuttonshown]) & {
+								flex-grow: 280 !important;
+							}
+
+							#nav-bar:not([customizing])[downloadsbuttonshown][unifiedextensionsbuttonshown] & {
+								flex-grow: 320 !important;
+							}
+						}
+					}
 				}
 			}
 
-			 > toolbarpaletteitem[place="toolbar"] > toolbarspring {
+			> toolbarpaletteitem[place="toolbar"] > toolbarspring {
 				margin-block: 0 !important;
 			}
 
-			> :is(#wrapper-vertical-spacer, #vertical-spacer) {
-				display: none;	/* Remove the spacer from the toolbar in vertical layout. */
+			/* Remove the spacer from the toolbar in vertical layout. */
+			> :is(#vertical-spacer, #wrapper-vertical-spacer) {
+				display: none;
 			}
 		}
 	}
@@ -53,13 +71,15 @@
 	@media (-moz-platform: macos) {
 		.titlebar-buttonbox-container {
 			position: absolute;
-			inset-block-start: calc(var(--theme-browser-toolbox-padding) + (var(--urlbar-min-height) - 16px) / 2);
+			inset-block-start: calc(var(--nept-browser-toolbox-padding) + (var(--urlbar-min-height) - 16px) / 2);
 			inset-inline-start: var(--space-small);
 		}
 	}
 
 	#TabsToolbar {
+		will-change: unset !important;
 		min-height: unset !important;
+		min-width: unset !important;
 
 		@media not -moz-pref("sidebar.verticalTabs") {
 			--toolbarbutton-inner-padding: inherit !important;
@@ -67,7 +87,7 @@
 
 			> .titlebar-spacer {
 				width: calc(var(--size-item-small) / 2) !important;
-				display: revert !important;
+				display: inherit !important;
 			}
 		}
 
@@ -86,14 +106,8 @@
 			justify-content: center;
 		}
 
-		.toolbarbutton-1 {
-			margin-block: auto calc(2 * var(--bookmark-block-padding)) !important;
-
-			> .toolbarbutton-icon {
-				padding: 0 !important;
-				width: var(--size-item-small) !important;
-				height: var(--size-item-small) !important;
-			}
+		> #personal-bookmarks > #PlacesToolbar > .toolbarbutton-1 {
+			margin-block: auto var(--bookmark-block-padding) !important;
 		}
 
 		toolbarbutton.bookmark-item:not(.subviewbutton) {
@@ -112,19 +126,19 @@
 		background-color: inherit !important;
 
 		.notificationbox-stack > .infobar {
-			--icon-size: var(--size-item-xsmall) !important;
 			--button-size-icon-small: 20px !important;
 			--button-min-height-small: 20px !important;
+			--button-min-height: 20px !important;
 			--button-border-radius: var(--border-radius-large) !important;
-			--message-bar-container-min-height: 28px !important;
 			--message-bar-border-width: 0 !important;
 			--message-bar-border-radius: var(--border-radius-circle) !important;
-			background-color: var(--neptune-tabs-default-background) !important;
+			--message-bar-icon-close-url: url("resource://content-accessible/close-12.svg") !important;
+			background-color: var(--nept-tabs-default-background) !important;
 			margin-inline: var(--space-medium) !important;
 			box-shadow: none !important;
 
 			&::before {
-				background-image: none !important;
+				content: none !important;
 			}
 		}
 	}
@@ -138,11 +152,117 @@
 		> .panel-arrowcontent {
 			border-color: var(--in-content-box-border-color) !important;
 			border-radius: var(--arrowpanel-border-radius) !important;
-			box-shadow: var(--neptune-menu-shadow) !important;
+			box-shadow: var(--nept-menu-shadow) !important;
 		}
 
 		> .panel-arrowbox > .panel-arrow[side="top"] {
 			stroke: var(--in-content-box-border-color) !important;
+		}
+	}
+}
+
+#browser {
+	:root[lwtheme] &:not(.browser-toolbox-background) {
+		background-color: transparent !important;
+	}
+
+	> #tabbrowser-tabbox {
+		clip-path: var(--in-content-clip-path);
+
+		.browserContainer {
+			@media -moz-pref("sidebar.revamp") {
+				outline: none !important;
+				box-shadow: none !important;
+			}
+
+			&:focus-visible {
+				outline: 2px solid AccentColor !important;
+				outline-offset: -2px !important;
+			}
+
+			#statuspanel #statuspanel-label {
+				background-color: var(--background-color-canvas) !important;
+				border: none !important;
+				border-radius: 0 var(--border-radius-xsmall) var(--border-radius-xsmall) 0;
+				backdrop-filter: blur(6px);
+			}
+		}
+
+		> #tabbrowser-tabpanels[splitview] {
+			:root:not([inDOMFullscreen]) & > .split-view-panel:not(.deck-selected) {
+				overflow: unset !important;
+			}
+
+			> .split-view-panel {
+				&[column="0"] {
+					margin: 0 var(--space-small) 0 0 !important;
+
+					> .browserContainer {
+						@media not -moz-pref("sidebar.verticalTabs") {
+							border-radius: 0 var(--border-radius-xlarge) 0 0 !important;
+						}
+
+						@media -moz-pref("sidebar.verticalTabs") {
+							border-radius: var(--border-radius-xlarge) var(--border-radius-xlarge) 0 0 !important;
+						}
+					}
+				}
+
+				&[column="1"] {
+					margin: 0 0 0 var(--space-small) !important;
+
+					> .browserContainer {
+						border-radius: var(--border-radius-xlarge) 0 0 0 !important;
+					}
+				}
+
+				split-view-footer {
+					--icon-size: var(--size-item-xsmall) !important;
+					background-color: var(--background-color-canvas) !important;
+					padding-block: 0 !important;
+					border-inline: none !important;
+					border-block: none !important;
+					border-end-start-radius: var(--border-radius-medium) !important;
+					border-end-end-radius: 0 !important;
+					backdrop-filter: blur(6px);
+
+					> .split-view-uri {
+						display: none;
+					}
+
+					> toolbarbutton {
+						appearance: none !important;
+						padding: var(--toolbarbutton-outer-padding) !important;
+
+						&:where(:hover) {
+							color: var(--color-accent-primary-hover) !important;
+						}
+
+						&:where(:hover:active, [checked="true"], [open="true"]) {
+							color: var(--color-accent-primary-active) !important;
+						}
+					}
+				}
+			}
+
+			> .split-view-splitter {
+				background-color: var(--panel-separator-color) !important;
+				min-width: calc(2 * var(--default-focusring-width)) !important;
+				border: none !important;
+				border-radius: var(--border-radius-xsmall) !important;
+				height: var(--size-item-large);
+				margin-block: auto;
+				transition: background-color 500ms ease-in-out;
+
+				&:hover {
+					background-color: var(--border-color) !important;
+					animation: splitter-V-pulsing 1s ease-in-out infinite;
+
+					&:active {
+						animation-play-state: paused;
+					}
+				}
+			}
 		}
 	}
 }
@@ -169,13 +289,14 @@ findbar {
 		> checkbox {
 			margin-inline: 0 var(--space-medium) !important;
 
-			&:has(~ .found-matches[hidden] ~ .findbar-find-status:not([status="notfound"])), > .checkbox-check {
+			> .checkbox-check,
+			&:has(~ .found-matches[hidden] ~ .findbar-find-status:not([status="notfound"])) {
 				display: none;
 			}
 
 			> .checkbox-label-box > .checkbox-label {
 				padding-inline: var(--space-medium);
-				border: 1px solid var(--border-color-deemphasized);
+				background-color: var(--button-background-color);
 				border-radius: var(--border-radius-large);
 
 				&:hover {
@@ -197,20 +318,21 @@ findbar {
 			border-radius: var(--border-radius-large) !important;
 		}
 
-		:is(.findbar-find-next, .findbar-find-previous) {
+		.findbar-find-next,
+		.findbar-find-previous {
 			padding: 0 var(--toolbarbutton-outer-padding) !important;
 			border: 1px solid var(--border-color-deemphasized);
 		}
 
 		.findbar-find-next {
 			list-style-image: url("../assets/icons/arrow-right.svg") !important;
-			margin-left: calc(-1 * var(--border-width)) !important;
-			border-left: none;
+			border-left-width: 0.5px;
 			border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0 !important;
 		}
 
 		.findbar-find-previous {
 			list-style-image: url("../assets/icons/arrow-left.svg") !important;
+			border-right-width: 0.5px;
 			border-radius: var(--border-radius-large) 0 0 var(--border-radius-large) !important;
 		}
 
@@ -226,5 +348,38 @@ findbar {
 		list-style-image: url("../assets/icons/done.svg") !important;
 		border: var(--border-width) solid var(--border-color-deemphasized);
 		border-radius: var(--border-radius-large) !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#nav-bar-customization-target,
+	#PersonalToolbar,
+	.split-view-splitter {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	#statuspanel-label,
+	split-view-footer {
+		backdrop-filter: none !important;
+	}
+}
+
+@media (forced-colors: active) {
+	#statuspanel-label,
+	split-view-footer {
+		backdrop-filter: none !important;
+		box-shadow: none !important;
+	}
+
+	.browserContainer:focus-visible {
+		outline: 2px solid Highlight !important;
+		outline-offset: -2px !important;
+	}
+
+	.split-view-splitter {
+		background-color: ButtonText !important;
 	}
 }

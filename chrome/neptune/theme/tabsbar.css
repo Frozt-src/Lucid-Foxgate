@@ -5,21 +5,23 @@
 
 	&[orient="horizontal"] {
 		--scrollbutton-display: none;
+		--scrollbutton-padding: calc((var(--tab-min-height) - var(--size-item-small)) / 2) var(--tab-overflow-clip-margin);
 		--tab-min-width: calc(48px + var(--tab-block-margin)) !important;
+		--tab-max-width: 225px !important;
 
 		:root:not([customizing]) & {
-			padding-bottom: calc(var(--theme-browser-toolbox-padding) / 2) !important;
+			padding-bottom: calc(var(--nept-browser-toolbox-padding) / 2) !important;
 			margin: 0 !important;
 		}
 
-		&:not(:has(#tabbrowser-arrowscrollbox > tab:not([hidden]))):has(#pinned-tabs-container > tab:only-of-type),
+		&:not(:has(tab-group, #tabbrowser-arrowscrollbox tab:not([hidden]))):has(#pinned-tabs-container > tab:only-of-type),
 		&:not(:has(tab-group, #pinned-tabs-container:not(:empty), tab:nth-child(2 of :not([hidden])))):has(tab:only-of-type, tab[hidden]) {
 			display: contents;
 		}
 
 		> #tabbrowser-arrowscrollbox {
-			background-color: var(--neptune-tabs-default-background);
-			border-radius: var(--border-radius-circle);
+			background-color: var(--nept-tabs-default-background);
+			border-radius: var(--tab-border-radius);
 
 			#pinned-tabs-container:not(:empty) ~ & {
 				margin-inline-start: var(--tab-block-margin);
@@ -32,24 +34,40 @@
 			&:not([pinned], tab-group[collapsed] > &:not([visuallyselected])) {
 				padding: var(--tab-overflow-clip-margin) !important;
 
-				&:not(:nth-child(1 of :not([hidden])), tab-group > &:first-of-type) {
-					padding-inline-start: var(--space-small) !important;
+				&:not(:nth-child(1 of :not([hidden])), tab-split-view-wrapper > &) {
+					margin-inline-start: var(--tab-block-margin) !important;
 				}
 
-				&[fadein]:not([style*="max-width"]) {
-					max-width: 100% !important;
+				&[fadein] {
+					&[selected]:not(tab-split-view-wrapper > &) {
+						min-width: calc(2 * var(--tab-min-width)) !important;
+					}
+
+					&:is([muted], [soundplaying], [activemedia-blocked]):not([tab-note]) {
+						--tab-min-width-extra-icons: calc(var(--size-item-xsmall) - var(--tab-overflow-clip-margin)) !important;
+					}
+
+					&[tab-note]:not([muted], [soundplaying], [activemedia-blocked]) {
+						--tab-min-width-extra-icons: calc(var(--size-item-xsmall) + var(--tab-inline-padding)) !important;
+					}
+
+					&[tab-note]:is([muted], [soundplaying], [activemedia-blocked]) {
+						--tab-min-width-extra-icons: var(--size-item-medium) !important;
+					}
 				}
 
-				&[selected] {
-					min-width: var(--theme-tab-selected-min-width) !important;
+				tab-split-view-wrapper > & {
+					&:first-of-type {
+						padding-inline-end: 0 !important;
+					}
+
+					&:last-of-type {
+						padding-inline-start: 0 !important;
+					}
 				}
 
-				&:not([selected]):is([muted], [soundplaying], [activemedia-blocked]) {
-					min-width: calc(var(--size-item-small) + var(--size-item-xsmall) + var(--tab-block-margin) + 2 * (var(--tab-inline-padding) + var(--tab-icon-end-margin))) !important;
-				}
-
-				&:not([multiselected-move-together], [tabdrop-samewindow], #tabbrowser-tabs[movingtab] &[fadein]:not([selected])) {
-					transition-duration: 300ms !important;
+				#tabbrowser-tabs[orient="horizontal"]:not([overflow]) & {
+					transition-duration: 180ms !important;
 				}
 			}
 
@@ -58,32 +76,13 @@
 				margin-inline-end: var(--tab-block-margin) !important;
 			}
 
-			&:first-of-type:not([selected], [pinned], tab-group > &:first-of-type) {
+			&:nth-child(1 of :not([pinned], [selected], tab-group > &)) {
 				--tab-loading-fill: transparent !important;
 			}
 
-			#tabbrowser-tabs:not(:has(tab-group, #tabbrowser-arrowscrollbox > &:not([hidden]))) > #pinned-tabs-container > &:only-of-type,
 			#tabbrowser-tabs:not(:has(tab-group, #pinned-tabs-container:not(:empty), &:nth-child(2 of :not([hidden])))) :is(&:only-of-type, :has(&[hidden]) &:nth-of-type(-n+2)) {
 				display: none;
 			}
-		}
-
-		/* Ensure the + New Tab button is visible and aligned in the horizontal tabstrip */
-		#tabs-newtab-button, #new-tab-button {
-			/* Layout/visibility */
-			display: flex !important;
-			align-items: center !important;
-			justify-content: center !important;
-			visibility: visible !important;
-			/* Size and shape */
-			height: var(--tab-min-height) !important;
-			min-height: var(--tab-min-height) !important;
-			border-radius: var(--border-radius-circle) !important;
-			/* Spacing */
-			margin-block: 0 !important;
-			margin-inline: var(--tab-inline-padding) !important;
-			/* Make sure it doesn't steal extra space or collapse */
-			flex: 0 0 auto !important;
 		}
 	}
 
@@ -94,33 +93,60 @@
 			padding-block: var(--space-xsmall) !important;
 		}
 
-		&[expanded] .tabbrowser-tab {
-			transition: margin-inline 150ms linear !important;
+		&[expanded] {
+			--tab-border-radius: calc(var(--border-radius-small) + 1px);
 
-			tab-group:not([collapsed]) > & {
-				margin-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin)) !important;
+			.tabbrowser-tab {
+				#tabbrowser-tabs:not([movingtab]) & {
+					transition: margin-inline 150ms ease-out !important;
+				}
 
-				#tabbrowser-tabs:has(&[selected]) &:not([selected]) {
+				#tabbrowser-tabs[movingtab][movingtab-addToGroup]:not(:is([movingtab-group], [movingtab-ungroup])) &[dragtarget] {
+					margin-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin)) !important;
+					width: calc(100% - (var(--size-item-small) + var(--tab-icon-end-margin))) !important;
+					transition: margin-inline 100ms ease-out, width 100ms ease-out !important;
+				}
+
+				/* Return max width when dragging a group tab out of the group. */
+				#tabbrowser-tabs[movingtab]:is([movingtab-group], [movingtab-ungroup]) tab-group > &[dragtarget] {
+					margin-inline-start: 0 !important;
+					width: 100% !important;
+					max-width: 100% !important;
+				}
+
+				tab-group:is(:not([collapsed]), [collapsed][hasactivetab]) > &:not(#tabbrowser-tabs[movingtab]:is([movingtab-group], [movingtab-ungroup]) tab-group &[dragtarget]) {
+					margin-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin)) !important;
+				}
+
+				#tabbrowser-arrowscrollbox > &:not([selected], [multiselected]) {
 					margin-inline-end: calc(var(--size-item-small) + var(--tab-icon-end-margin) + (var(--tab-inline-padding) - var(--tab-inner-inline-margin))) !important;
 				}
 			}
+		}
 
-			tab-group[collapsed] > &[visuallyselected] {
-				margin-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin)) !important;
+		&:not([expanded]) tab-split-view-wrapper .tabbrowser-tab {
+			&:first-of-type {
+				padding-block-end: 0 !important;
 			}
 
-			&:not([pinned], [selected], tab-group > &) {
-				margin-inline-end: calc(var(--size-item-small) + var(--tab-icon-end-margin) + (var(--tab-inline-padding) - var(--tab-inner-inline-margin))) !important;
+			&:last-of-type {
+				padding-block-start: 0 !important;
 			}
 		}
 
-		&[overflow]::after {
-			display: none;
+		&::after {
+			content: none !important;
 		}
 
-		#tabs-newtab-button, #vertical-tabs-newtab-button {
-			margin: var(--space-xsmall) auto !important;
-			border-radius: var(--border-radius-circle) !important;
+		#tabs-newtab-button,
+		#vertical-tabs-newtab-button {
+			padding: 0 calc((var(--tab-min-height) - var(--icon-size-xsmall)) / 2) !important;
+			margin-block: var(--space-xsmall) !important;
+			margin-inline: auto !important;
+
+			> .toolbarbutton-icon {
+				width: var(--icon-size-xsmall) !important;
+			}
 
 			> .toolbarbutton-text {
 				display: none;
@@ -128,13 +154,19 @@
 
 			#tabbrowser-tabs[expanded] & {
 				width: inherit !important;
+				border-radius: var(--border-radius-xlarge) !important;
 			}
 		}
 	}
 
 	> #pinned-drop-indicator {
 		outline: none !important;
-		border-radius: var(--border-radius-circle) !important;
+		border-radius: var(--tab-border-radius) !important;
+
+		&:focus-visible {
+			outline: 2px solid AccentColor !important;
+			outline-offset: -2px !important;
+		}
 
 		&[visible] #pinned-drop-indicator-icon {
 			width: var(--size-item-xsmall) !important;
@@ -142,14 +174,13 @@
 		}
 
 		&[interactive] {
-			background-color: var(--neptune-pinned-tab-hover-background) !important;
+			background-color: var(--nept-pinned-tab-hover-background) !important;
 		}
 
 		#tabbrowser-tabs[orient="horizontal"] > & {
 			height: var(--tabstrip-min-height) !important;
 			margin-inline: 0 var(--tab-inline-padding) !important;
-			padding-inline: 0 !important;
-			align-items: center !important;
+			padding-inline: calc((var(--tabstrip-min-height) - var(--icon-size-xsmall)) / 2) !important;
 		}
 
 		#tabbrowser-tabs[orient="vertical"] > & {
@@ -157,7 +188,7 @@
 
 			&[visible] {
 				height: var(--tab-min-height) !important;
-				gap: var(--space-medium) !important;
+				margin-bottom: var(--space-xsmall) !important;
 			}
 		}
 	}
@@ -168,29 +199,30 @@
 		margin-inline: auto !important;
 		border: none !important;
 		border-radius: var(--border-radius-small) !important;
-		transition: min-width 150ms linear, var(--ext-theme-background-transition);
+		transition: min-width 150ms ease-in-out, var(--ext-theme-background-transition);
 
 		#vertical-tabs:hover & {
 			background-color: var(--panel-separator-color) !important;
 
 			&:hover {
 				min-width: var(--size-item-small) !important;
+				animation: splitter-H-pulsing 500ms ease-in-out both;
+
+				#tabbrowser-tabs[orient="vertical"][expanded] & {
+					min-width: var(--size-item-medium) !important;
+				}
 			}
 		}
 	}
 
 	.tab-group-label-container {
 		#tabbrowser-tabs[orient="horizontal"] tab-group > & {
-			padding-inline-end: var(--tab-overflow-clip-margin) !important;
-			margin-inline-start: var(--space-small) !important;
+			padding-inline: var(--tab-overflow-clip-margin) !important;
+			margin-inline-start: var(--tab-block-margin) !important;
 
 			/*If the first tab is a tab group, keep the same start margin as a normal tab.*/
-			tab-group:first-of-type > &:not(#tabbrowser-arrowscrollbox[orient="horizontal"] > tab:not([hidden]) + tab-group > &) {
-				margin-inline-start: calc(var(--tab-block-margin) / 2) !important;
-			}
-
-			tab-group:not([collapsed]) > & {
-				margin-inline-end: var(--tab-block-margin) !important;
+			tab-group:nth-child(1 of :not(#tabbrowser-arrowscrollbox[orient="horizontal"] > :is(tab:not([hidden]), tab-split-view-wrapper) + tab-group)) > & {
+				margin-inline-start: 0 !important;
 			}
 		}
 
@@ -202,100 +234,228 @@
 			}
 		}
 
-		&::after {
-			display: none;
+		#tabbrowser-tabs[orient="vertical"][expanded] & {
+			margin-inline: var(--tab-inner-inline-margin) !important;
+
+			/* Reserve space for the "tab group overflow count" only when its shown. If the counter is removed, comment it out. */
+			#tabbrowser-tabs:not([movingtab]) tab-group[collapsed][hasactivetab][hasmultipletabs] > & {
+				margin-inline-end: calc(var(--size-item-small) + var(--tab-inner-inline-margin) + var(--space-medium)) !important;
+				transition: margin-inline 100ms ease-out;
+			}
 		}
 
-		> .tab-group-label {
-			line-height: var(--tab-group-label-height) !important;
-			border-radius: var(--border-radius-circle) !important;
-			outline: none !important;
-			transition: background-color 200ms ease-out, color 100ms ease-out;
+		&::after {
+			content: none !important;
+		}
 
-			tab-group[collapsed] > .tab-group-label-container > & {
-				background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 25%, transparent), color-mix(in srgb, var(--tab-group-color-invert) 35%, transparent)) !important;
-
-				#tabbrowser-tabs[movingtab] &:active {
-					backdrop-filter: blur(2em);
-				}
-			}
+		> .tab-group-label-hover-highlight {
+			background-color: transparent !important;
+			border-radius: var(--tab-border-radius) !important;
+			box-shadow: none !important;
 
 			#tabbrowser-tabs[orient="horizontal"] & {
-				padding-inline: var(--tab-inline-padding) !important;
-			}
-
-			#tabbrowser-tabs[orient="vertical"] & {
-				height: var(--tab-group-label-height) !important;
-				margin-block: var(--space-xsmall) !important;
+				padding-block: 0 !important;
 			}
 
 			#tabbrowser-tabs[orient="vertical"][expanded] & {
-				-moz-context-properties: fill;
-				min-width: -moz-available !important;
-				padding-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin) + (var(--tab-inline-padding) - var(--tab-inner-inline-margin))) !important;
-				background: url("../assets/icons/tab-group.svg") no-repeat calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) transparent !important;
-				color: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
-				fill: light-dark(var(--tab-group-color), var(--tab-group-color-invert));
-				text-align: left !important;
-
-				tab-group[collapsed] > .tab-group-label-container > & {
-					background: url("../assets/icons/tab-group-collapsed.svg") no-repeat calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) !important;
-					color: inherit !important;
-
-					#tabbrowser-tabs[movingtab] & {
-						background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 25%, transparent), color-mix(in srgb, var(--tab-group-color-invert) 35%, transparent)) !important;
-					}
-				}
+				margin-inline-end: 0 !important;
 			}
 
 			#tabbrowser-tabs[orient="vertical"]:not([expanded]) & {
-				width: var(--tab-group-label-height) !important;
-				max-width: unset !important;
-				margin-inline: var(--tab-inner-inline-margin) !important;
+				margin-inline: auto !important;
 			}
-		}
-	}
 
-	.tab-group-line {
-		background-color: transparent !important;
-		inset-block: 0 !important;
-		border-radius: var(--border-radius-circle) !important;
+			> .tab-group-label {
+				background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 70%, transparent) !important;
+				line-height: var(--tab-group-label-height) !important;
+				border-radius: var(--tab-border-radius) !important;
+				outline: none !important;
+				transition: background-color 200ms ease-in-out, color 100ms ease-in-out;
 
-		#tabbrowser-tabs[orient="horizontal"] & {
-			height: var(--tab-min-height) !important;
-			inset-inline: 0 !important;
-		}
+				&:focus-visible {
+					outline: 2px solid AccentColor !important;
+					outline-offset: -2px !important;
+				}
 
-		#tabbrowser-tabs[orient="vertical"] & {
-			width: auto !important;
-			inset-inline: var(--tab-inner-inline-margin) !important;
-		}
+				#tabbrowser-tabs:not([orient="vertical"]:not([expanded]))[movingtab] &:active {
+					backdrop-filter: blur(12px);
+				}
 
-		#tabbrowser-tabs[movingtab]:not([movingtab-group], [movingtab-ungroup]) .tabbrowser-tab:is(:active, [multiselected]) > .tab-stack > .tab-background > & {
-			background-color: light-dark(color-mix(in srgb, var(--dragover-tab-group-color) 20%, transparent), color-mix(in srgb, var(--dragover-tab-group-color) 25%, transparent)) !important;
-			backdrop-filter: blur(1em);
+				#tabbrowser-tabs[orient="horizontal"] & {
+					padding-inline: var(--tab-inline-padding) !important;
+
+					tab-group[collapsed] > .tab-group-label-container & {
+						box-shadow:
+							var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 5%, transparent),
+							var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 5%, transparent),
+							0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 2%, transparent);
+
+						&:not([dragover-groupTarget]) {
+							background-color: color-mix(in oklab, light-dark(var(--tab-group-color-pale), var(--tab-group-color)) 20%, transparent) !important;
+						}
+
+						&[dragover-groupTarget] {
+							background-color: color-mix(in oklab, light-dark(var(--tab-group-color-pale), var(--tab-group-color)) 40%, transparent) !important;
+							box-shadow:
+								var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 10%, transparent),
+								var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 10%, transparent),
+								0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 4%, transparent)
+							!important;
+						}
+					}
+
+					tab-group:not([collapsed]) > .tab-group-label-container & {
+						box-shadow: 0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 8%, transparent);
+					}
+				}
+
+				#tabbrowser-tabs[orient="vertical"] & {
+					height: var(--tab-group-label-height) !important;
+					margin-block: var(--space-xsmall) !important;
+				}
+
+				#tabbrowser-tabs[orient="vertical"][expanded] & {
+					-moz-context-properties: fill;
+					min-width: -moz-available !important;
+					margin-inline-end: 0 !important;
+					padding-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin) + (var(--tab-inline-padding) - var(--tab-inner-inline-margin))) !important;
+					background: url("../assets/icons/tab-group.svg") no-repeat calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) transparent !important;
+					color: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
+					fill: light-dark(var(--tab-group-color), var(--tab-group-color-invert));
+					text-align: left !important;
+
+					tab-group[collapsed] > .tab-group-label-container & {
+						background: url("../assets/icons/tab-group-collapsed.svg") no-repeat calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) !important;
+						color: inherit !important;
+
+						&[dragover-groupTarget] {
+							background-color: color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 10%, transparent) !important;
+							box-shadow: none !important;
+						}
+
+						#tabbrowser-tabs[movingtab] &:active {
+							box-shadow: 0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 25%, transparent);
+						}
+					}
+				}
+
+				#tabbrowser-tabs[orient="vertical"]:not([expanded]) & {
+					background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 70%, transparent) !important;
+					width: var(--tab-group-label-height) !important;
+					max-width: unset !important;
+					margin-inline: var(--tab-inner-inline-margin) !important;
+					box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 20%, transparent), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 20%, transparent);
+
+					tab-group[collapsed] > .tab-group-label-container & {
+						&:not([dragover-groupTarget]) {
+							background-color: color-mix(in oklab, light-dark(var(--tab-group-color-pale), var(--tab-group-color)) 40%, transparent) !important;
+							box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 10%, transparent), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 10%, transparent);
+						}
+
+						&[dragover-groupTarget] {
+							background-color: color-mix(in oklab, light-dark(var(--tab-group-color-pale), var(--tab-group-color)) 60%, transparent) !important;
+							box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 20%, transparent), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 20%, transparent) !important;
+						}
+					}
+
+					/* The label text turns transparent when the tab group count is activated. If the counter is removed, comment it out. */
+					#tabbrowser-tabs:not([movingtab]) tab-group[collapsed][hasactivetab][hasmultipletabs] > .tab-group-label-container:not(:hover) & {
+						color: transparent !important;
+					}
+				}
+			}
 		}
 	}
 
 	.tab-group-overflow-count-container {
+		font-family: monospace;
+
 		#tabbrowser-tabs[orient="horizontal"] & {
+			margin-inline: var(--tab-overflow-clip-margin) 0 !important;
 			padding-inline: 0 !important;
-			margin-inline: 0 !important;
+
+			tab-group[collapsed][hasactivetab][hasmultipletabs]:has(+ #tabbrowser-arrowscrollbox-periphery) > & {
+				display: none !important;
+			}
+
+			> .tab-group-overflow-count {
+				background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 10%, var(--lwt-accent-color, transparent));
+				padding: 0 var(--tab-group-label-padding) !important;
+				margin: 0 auto auto !important;
+				border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+				box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color)), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color)), var(--box-shadow-card);
+			}
 		}
 
 		#tabbrowser-tabs[orient="vertical"][expanded] & {
-			margin-block-start: calc(-1 * (var(--tab-min-height) + var(--space-xsmall)));
 			margin-inline-start: 0 !important;
-			padding-block-end: var(--space-xsmall);
+
+			> .tab-group-overflow-count {
+				position: absolute;
+				background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 8%, transparent);
+				padding: 0 var(--tab-group-label-padding) !important;
+				inset: auto var(--tab-inner-inline-margin) calc(var(--tab-min-height) + var(--space-medium) + 7px) auto;
+				border-radius: var(--border-radius-large);
+			}
 		}
 
-		#tabbrowser-tabs[orient="vertical"]:not([expanded]) & > .tab-group-overflow-count {
-			padding-block-end: var(--space-xsmall) !important;
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) & {
+			tab-group[collapsed][hasactivetab][hasmultipletabs] > .tab-group-label-container:hover ~ & {
+				display: none !important;
+			}
+
+			> .tab-group-overflow-count {
+				position: absolute;
+				width: fit-content;
+				padding: 0 !important;
+				margin-inline: auto !important;
+				inset: auto 0 calc(var(--tab-min-height) + var(--space-medium) + 7px);
+			}
 		}
 
-		tab-group[hasactivetab][hasmultipletabs] > &::after {
-			--tab-group-line-color: transparent !important;
-			display: none;
+		&::after {
+			content: none !important;
+		}
+	}
+
+	tab-split-view-wrapper {
+		background-color: transparent !important;
+		padding: 0 !important;
+		border: none !important;
+		outline: none !important;
+
+		&:focus-visible {
+			outline: 2px solid AccentColor !important;
+			outline-offset: -2px !important;
+		}
+
+		#tabbrowser-tabs[orient="horizontal"] & {
+			--tab-min-width-pref: calc(2 * var(--tab-min-width)) !important;
+			flex: 200 200 !important;
+			margin-block: 0 !important;
+
+			/* Keep the split view tab's margin consistent with the normal tab. */
+			#tabbrowser-arrowscrollbox > :is(tab:not([hidden]), tab-group) + &,
+			#tabbrowser-arrowscrollbox > tab-group:is(:not([collapsed]), [collapsed][hasactivetab]) > & {
+				margin-inline-start: var(--tab-block-margin) !important;
+			}
+		}
+
+		#tabbrowser-tabs[orient="vertical"] & {
+			gap: unset !important;
+		}
+
+		#tabbrowser-tabs[orient="vertical"][expanded] & {
+			grid-template-columns: repeat(2, 1fr) !important;
+			margin-inline: var(--tab-inner-inline-margin) !important;
+
+			tab-group > &:not([dragtarget]) {
+				margin-inline-start: calc(var(--size-item-small) + var(--tab-icon-end-margin) + var(--tab-inner-inline-margin)) !important;
+			}
+		}
+
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) & {
+			margin-inline: auto !important;
 		}
 	}
 }
@@ -304,139 +464,325 @@
 	--tab-label-mask-size: 0 !important;
 	--tab-icon-end-margin: inherit !important;
 
+	&[usercontextid] {
+		--tab-loading-fill: var(--identity-tab-color);
+	}
+
+	tab-group &:not([usercontextid]) {
+		--tab-loading-fill: light-dark(var(--tab-group-color), var(--tab-group-color-pale));
+	}
+
+	#tabbrowser-tabs tab-split-view-wrapper & {
+		border-inline: none !important;
+		border-block: none !important;
+	}
+
 	.tab-background {
+		--split-view-tab-clip: calc(var(--tab-overflow-clip-margin) / -1);
 		background-color: transparent !important;
 		margin-block: 0 !important;
-		border-radius: var(--border-radius-circle) !important;
 		outline: none !important;
 		transition: var(--ext-theme-background-transition), box-shadow 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
 
-		#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab[pinned] > .tab-stack > & {
-			min-height: var(--tabstrip-min-height) !important;
+		.tabbrowser-tab:focus-visible > .tab-stack > & {
+			outline: 2px solid AccentColor !important;
+			outline-offset: -2px !important;
 		}
 
-		#tabbrowser-tabs[orient="vertical"] & {
+		#tabbrowser-tabs[orient="horizontal"] > #pinned-tabs-container > .tabbrowser-tab > .tab-stack > & {
+			--tab-min-height: var(--tabstrip-min-height) !important;
+		}
+
+		#tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper > .tabbrowser-tab > .tab-stack > & {
+			--tab-min-height: var(--size-item-medium) !important;
+		}
+
+		#tabbrowser-tabs:not([orient="vertical"]:not([expanded])) tab-split-view-wrapper > .tabbrowser-tab > .tab-stack > & {
+			margin-inline: 0 !important;
+		}
+
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) tab-split-view-wrapper > .tabbrowser-tab > .tab-stack > & {
+			margin-inline: auto !important;
+		}
+
+		#tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper > .tabbrowser-tab:first-of-type > .tab-stack > & {
+			clip-path: inset(var(--split-view-tab-clip) 0 var(--split-view-tab-clip) var(--split-view-tab-clip));
+		}
+
+		#tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper > .tabbrowser-tab:last-of-type > .tab-stack > & {
+			clip-path: inset(var(--split-view-tab-clip) var(--split-view-tab-clip) var(--split-view-tab-clip) 0);
+		}
+
+		#tabbrowser-tabs:not([orient="vertical"]:not([expanded])) tab-split-view-wrapper > .tabbrowser-tab:first-of-type > .tab-stack > & {
+			border-radius: var(--tab-border-radius) 0 0 var(--tab-border-radius) !important;
+		}
+
+		#tabbrowser-tabs:not([orient="vertical"]:not([expanded])) tab-split-view-wrapper > .tabbrowser-tab:last-of-type > .tab-stack > & {
+			border-radius: 0 var(--tab-border-radius) var(--tab-border-radius) 0 !important;
+		}
+
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) tab-split-view-wrapper > .tabbrowser-tab:first-of-type > .tab-stack > & {
+			border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0 !important;
+		}
+
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) tab-split-view-wrapper > .tabbrowser-tab:last-of-type > .tab-stack > & {
+			border-radius: 0 0 var(--tab-border-radius) var(--tab-border-radius) !important;
+		}
+
+		#tabbrowser-tabs[movingtab] :is(.tabbrowser-tab:active, tab-split-view-wrapper > .tabbrowser-tab) > .tab-stack > & {
+			backdrop-filter: blur(12px);
+		}
+
+		/* Pinned tabs and the "moving add to group" tab do not show shadows. The "moving add to group" tab's shadow is currently drawn by the "tab group line". */
+		&:not(#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox .tabbrowser-tab:not([movingtab][movingtab-addToGroup]:not([movingtab-group], [movingtab-ungroup]) .tabbrowser-tab:active) > .tab-stack > &) {
 			box-shadow: none !important;
 		}
 
-		&[selected]:not([multiselected], #tabbrowser-tabs[movingtab]:not([movingtab-group], [movingtab-ungroup]) tab:active > .tab-stack > &) {
-			background-color: var(--neptune-tab-selected-background) !important;
+		/* Tab background color precedence: Moving tab > Container tab > Group tab > Normal tab. */
+		&[selected]:not([multiselected], #tabbrowser-tabs[movingtab]:not([movingtab-group], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox > tab:active > .tab-stack > &) {
+			background-color: var(--nept-tab-selected-background) !important;
 
-			#pinned-tabs-container[orient="horizontal"] & {
-				background-color: var(--neptune-pinned-tab-selected-background) !important;
-				box-shadow: none !important;
+			#tabbrowser-tabs[orient="horizontal"] > #pinned-tabs-container & {
+				background-color: var(--nept-pinned-tab-selected-background) !important;
 			}
 
-			#tabbrowser-tabs[orient="vertical"] & {
-				background-color: var(--neptune-verticaltab-selected-background) !important;
-			}
+			#tabbrowser-tabs[orient="vertical"] .tabbrowser-tab & {
+				background-color: var(--nept-verticaltab-selected-background) !important;
 
-			tab-group:not([collapsed]) > .tabbrowser-tab > .tab-stack > & {
-				background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 10%, var(--lwt-accent-color, transparent)), color-mix(in srgb, var(--tab-group-color-invert) 15%, transparent)) !important;
-
-				#tabbrowser-tabs[orient="horizontal"] & {
-					box-shadow: inset -0.35px 0.65px 0.45px color-mix(in srgb, var(--tab-group-color) 15%, var(--lwt-accent-color)), inset -0.35px -0.65px 0.45px 0.25px color-mix(in srgb, var(--tab-group-color) 15%, var(--lwt-accent-color)), 0 0 0 2px var(--neptune-content-border-color) !important;
-
-					@media (prefers-color-scheme: dark) {
-						box-shadow: inset -0.35px 0.65px 0.45px color-mix(in srgb, var(--tab-group-color-invert) 20%, var(--lwt-accent-color)), inset -0.35px -0.65px 0.45px 0.25px color-mix(in srgb, var(--tab-group-color-invert) 20%, var(--lwt-accent-color)), 0 0 0 2px var(--neptune-content-border-color) !important;
-					}
+				tab-group:not(#tabbrowser-tabs:is([movingtab-group], [movingtab-ungroup]) tab-group):is(:not([collapsed]), [collapsed][hasactivetab]) .tabbrowser-tab > .tab-stack > & {
+					background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 12%, transparent) !important;
 				}
 			}
 
-			tab[usercontextid] > .tab-stack > & {
+			/* Group tabs instantly revert to the default background color when dragged out of their group. */
+			#tabbrowser-tabs[orient="horizontal"]:not([movingtab-group], [movingtab-ungroup]) tab-group:is(:not([collapsed]), [collapsed][hasactivetab]) .tabbrowser-tab > .tab-stack > & {
+				background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 10%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow:
+					var(--shadow-inner-glow) light-dark(color-mix(in oklab, var(--tab-group-color) 15%, var(--lwt-accent-color, transparent)), color-mix(in oklab, var(--tab-group-color-pale) 5%, var(--lwt-accent-color, transparent))),
+					var(--shadow-inner-depth) light-dark(color-mix(in oklab, var(--tab-group-color) 15%, var(--lwt-accent-color, transparent)), color-mix(in oklab, var(--tab-group-color-pale) 5%, var(--lwt-accent-color, transparent))),
+					0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 8%, transparent)
+				!important;
+			}
+
+			#tabbrowser-tabs:not([movingtab][movingtab-group]) .tabbrowser-tab[usercontextid]:not(#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox .tabbrowser-tab, tab-group[collapsed] > .tabbrowser-tab[visuallyselected]) > .tab-stack > & {
+				background-color: color-mix(in oklab, var(--identity-tab-color) 16%, transparent) !important;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"]:not([movingtab][movingtab-group]) .tabbrowser-tab[usercontextid]:not(tab-group[collapsed] > .tabbrowser-tab[visuallyselected]) > .tab-stack > & {
 				background-color: color-mix(in srgb, var(--identity-tab-color) 10%, var(--lwt-accent-color, transparent)) !important;
 
-				#tabbrowser-tabs[orient="horizontal"] &:not(#pinned-tabs-container &) {
-					box-shadow: inset -0.35px 0.65px 0.45px color-mix(in srgb, var(--identity-tab-color) 15%, var(--lwt-accent-color)), inset -0.35px -0.65px 0.45px 0.25px color-mix(in srgb, var(--identity-tab-color) 15%, var(--lwt-accent-color)), 0 0 0 2px var(--neptune-content-border-color) !important;
-				}
-
-				#pinned-tabs-container[orient="horizontal"] & {
-					background-color: color-mix(in srgb, var(--identity-tab-color) 20%, var(--lwt-accent-color, transparent)) !important;
-				}
-
-				#tabbrowser-tabs[orient="vertical"] & {
-					background-color: color-mix(in srgb, var(--identity-tab-color) 15%, transparent) !important;
+				&:not(#pinned-tabs-container > .tabbrowser-tab &) {
+					box-shadow:
+						var(--shadow-inner-glow) color-mix(in oklab, var(--identity-tab-color) 15%, var(--lwt-accent-color, transparent)),
+						var(--shadow-inner-depth) color-mix(in oklab, var(--identity-tab-color) 15%, var(--lwt-accent-color, transparent)),
+						0 0 0 var(--tab-overflow-clip-margin) color-mix(in oklab, var(--identity-tab-color) 8%, transparent)
+					!important;
 				}
 			}
 
-			#tabbrowser-tabs[movingtab-group] tab > .tab-stack > & {
-				background-color: light-dark(color-mix(in srgb, var(--dragover-tab-group-color) 20%, transparent), color-mix(in srgb, var(--dragover-tab-group-color-invert) 25%, transparent)) !important;
-				box-shadow: none !important;
+			#tabbrowser-tabs[orient="horizontal"][movingtab][movingtab-group] .tabbrowser-tab > .tab-stack > & {
+				background-color: color-mix(in srgb, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow:
+					var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, var(--lwt-accent-color, transparent)),
+					var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, var(--lwt-accent-color, transparent)),
+					0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 8%, transparent)
+				!important;
 			}
 
-			#tabbrowser-tabs[movingtab] tab:active > .tab-stack > & {
-				backdrop-filter: blur(1em);
+			#tabbrowser-tabs[orient="vertical"][movingtab][movingtab-group] .tabbrowser-tab > .tab-stack > & {
+				background-color: color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, transparent) !important;
 			}
 		}
 
 		&:not([selected], [multiselected]) {
-			background-color: inherit !important;
+			background-color: transparent !important;
 
-			#pinned-tabs-container[orient="horizontal"] & {
-				background-color: var(--neptune-pinned-tab-background) !important;
-							
-				tab:hover & {
-					background-color: var(--neptune-pinned-tab-hover-background) !important;
-				}
+			#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox .tabbrowser-tab:not([usercontextid], tab-group .tabbrowser-tab):hover > .tab-stack > & {
+				background-color: var(--nept-tab-hover-background) !important;
+				box-shadow: 0 0 0 var(--tab-overflow-clip-margin) var(--nept-tab-hover-shadow-color) !important;
 			}
 
-			#tabbrowser-tabs[orient="horizontal"][movingtab] &:not(tab-group > tab &) {
-				background-color: var(--neptune-tab-background) !important;
-			}
-
-			tab-group:not([collapsed]) > tab > .tab-stack > & {
-				background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 5%, var(--lwt-accent-color, transparent)), color-mix(in srgb, var(--tab-group-color-invert) 8%, var(--lwt-accent-color, transparent))) !important;
+			#tabbrowser-tabs[orient="horizontal"] > #pinned-tabs-container .tabbrowser-tab > .tab-stack > & {
+				background-color: var(--nept-pinned-tab-background) !important;
 
 				tab:hover & {
-					background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 10%, var(--lwt-accent-color, transparent)), color-mix(in srgb, var(--tab-group-color-invert) 15%, var(--lwt-accent-color, transparent))) !important;
+					background-color: var(--nept-pinned-tab-hover-background) !important;
 				}
 			}
 
-			tab:hover & {
-				background-color: var(--neptune-tab-hover-background) !important;
-			}
-
-			#tabbrowser-tabs[orient="vertical"] &:not(tab[usercontextid] > .tab-stack > &):not(tab-group:not([collapsed]) .tabbrowser-tab > .tab-stack > &) {
-				background-color: var(--neptune-verticaltab-background) !important;
-
-				.tabbrowser-tab[pinned] > .tab-stack > & {
-					background-color: var(--neptune-verticaltab-pinned-background) !important;
-				}
+			#tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:not(pinned) > .tab-stack > &:not(:is([usercontextid], [dragover-groupTarget], tab-group .tabbrowser-tab) > .tab-stack > &) {
+				background-color: var(--nept-verticaltab-background) !important;
 
 				tab:hover & {
-					background-color: var(--neptune-verticaltab-hover-background) !important;
+					background-color: var(--nept-tab-hover-background) !important;
 				}
 			}
 
-			tab[usercontextid] > .tab-stack > & {
-				background-color: color-mix(in srgb, var(--identity-tab-color) 5%, transparent) !important;
+			#tabbrowser-tabs[orient="vertical"] > #pinned-tabs-container > .tabbrowser-tab:not(:hover, [usercontextid]):not(:is([muted], [soundplaying], [activemedia-blocked])) > .tab-stack > & {
+				background-color: var(--nept-verticaltab-pinned-background) !important;
+			}
 
-				#pinned-tabs-container[orient="horizontal"] & {
-					background-color: color-mix(in srgb, var(--identity-tab-color) 12%, var(--lwt-accent-color, transparent)) !important;
+			#tabbrowser-tabs tab-group:not([collapsed]) .tabbrowser-tab:not([usercontextid]) > .tab-stack > & {
+				background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 2%, transparent) !important;
+
+				#tabbrowser-arrowscrollbox[orient="vertical"] .tabbrowser-tab:hover & {
+					background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 8%, transparent) !important;
 				}
+
+				#tabbrowser-arrowscrollbox[orient="horizontal"] .tabbrowser-tab:hover & {
+					background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 10%, transparent) !important;
+					box-shadow: 0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 2%, transparent) !important;
+				}
+			}
+
+			#tabbrowser-tabs > #tabbrowser-arrowscrollbox .tabbrowser-tab[usercontextid] > .tab-stack > &:not([dragover-groupTarget]) {
+				background-color: color-mix(in oklab, var(--identity-tab-color) 2%, transparent) !important;
 
 				tab:hover & {
-					background-color: color-mix(in srgb, var(--identity-tab-color) 8%, transparent) !important;
+					background-color: color-mix(in oklab, var(--identity-tab-color) 8%, transparent) !important;
+				}
+
+				#tabbrowser-arrowscrollbox[orient="horizontal"] tab:hover & {
+					box-shadow: 0 0 0 var(--tab-overflow-clip-margin) color-mix(in oklab, var(--identity-tab-color) 2%, transparent) !important;
 				}
 			}
 
-			.tabbrowser-tab:is([muted], [soundplaying], [activemedia-blocked]):not(:is(#tabbrowser-tabs[orient="vertical"][expanded], #tabbrowser-tabs[orient="horizontal"]) .tabbrowser-tab:not([pinned]):is([muted], [soundplaying], [activemedia-blocked])) &:not(tab:hover &) {
-				background-color: var(--neptune-tab-soundplaying-background) !important;
+			#tabbrowser-tabs > #pinned-tabs-container > .tabbrowser-tab[usercontextid] > .tab-stack > & {
+				background-color: color-mix(in oklab, var(--identity-tab-color) 10%, transparent) !important;
+
+				tab:hover & {
+					background-color: color-mix(in oklab, var(--identity-tab-color) 16%, transparent) !important;
+				}
+			}
+
+			#tabbrowser-tabs > :is(#pinned-tabs-container, #tabbrowser-arrowscrollbox[orient="vertical"]:not(#tabbrowser-tabs[orient="vertical"][expanded] > #tabbrowser-arrowscrollbox)) .tabbrowser-tab:not(:hover, [dragover-groupTarget]):is([muted], [soundplaying], [activemedia-blocked]) > .tab-stack > & {
+				background-color: var(--nept-tab-soundplaying-background) !important;
 				animation: var(--tab-sharing-icon-animation) -1s;
 
-				tab-group:not([collapsed]) > .tabbrowser-tab > .tab-stack > &:not(#tabbrowser-tabs[orient="vertical"][expanded] &) {
-					background-color: light-dark(color-mix(in srgb, var(--tab-group-color) 30%, transparent), color-mix(in srgb, var(--tab-group-color-invert) 35%, transparent)) !important;
+				.tabbrowser-tab[usercontextid] & {
+					background-color: color-mix(in oklab, var(--identity-tab-color) 25%, transparent) !important;
 				}
+
+				tab-group:not([collapsed]) .tabbrowser-tab:not([usercontextid]) & {
+					background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 25%, transparent) !important;
+				}
+			}
+
+			#tabbrowser-tabs[orient="horizontal"][movingtab][movingtab-group] .tabbrowser-tab > .tab-stack > &[dragover-groupTarget] {
+				background-color: color-mix(in srgb, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow:
+					var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 25%, var(--lwt-accent-color, transparent)),
+					var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 25%, var(--lwt-accent-color, transparent)),
+					0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 4%, transparent)
+				!important;
+			}
+
+			#tabbrowser-tabs[orient="vertical"][movingtab][movingtab-group] .tabbrowser-tab > .tab-stack > &[dragover-groupTarget] {
+				background-color: color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, transparent) !important;
 			}
 		}
 
 		&[multiselected] {
-			background-color: var(--neptune-tab-multiselected-background) !important;
-			box-shadow: none !important;
-			animation: 2s linear tab-sharing-icon-pulse infinite;
+			background-color: var(--nept-tab-multiselected-background) !important;
 
-			#tabbrowser-tabs[movingtab-group] tab > .tab-stack > & {
-				background-color: light-dark(color-mix(in srgb, var(--dragover-tab-group-color) 20%, transparent), color-mix(in srgb, var(--dragover-tab-group-color-invert) 25%, transparent)) !important;
+			#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox .tabbrowser-tab:not([usercontextid]) & {
+				background-color: var(--nept-tab-selected-background) !important;
+				box-shadow: 0 0 0 var(--tab-overflow-clip-margin) var(--nept-tab-multiselected-shadow-color) !important;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"]:not([movingtab-group], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox tab-group .tabbrowser-tab:not([usercontextid]) > .tab-stack > & {
+				background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 15%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow: 0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 30%, transparent) !important;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"]:not([movingtab-group]) > #tabbrowser-arrowscrollbox .tabbrowser-tab[usercontextid] > .tab-stack > & {
+				background-color: color-mix(in srgb, var(--identity-tab-color) 15%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow: 0 0 0 var(--tab-overflow-clip-margin) color-mix(in oklab, var(--identity-tab-color) 30%, transparent) !important;
+			}
+
+			#tabbrowser-tabs:not([movingtab-group], [movingtab-ungroup]) > :is(#pinned-tabs-container, #tabbrowser-arrowscrollbox[orient="vertical"]) .tabbrowser-tab[usercontextid]:not([dragtarget]) > .tab-stack > & {
+				background-color: color-mix(in oklab, var(--identity-tab-color) 25%, transparent) !important;
+			}
+
+			#tabbrowser-tabs[orient="vertical"]:not([movingtab-group], [movingtab-ungroup]) tab-group .tabbrowser-tab > .tab-stack > & {
+				background-color: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 15%, transparent) !important;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"][movingtab][movingtab-group]:not([movingtab-addToGroup], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox .tabbrowser-tab[dragtarget] > .tab-stack > & {
+				background-color: color-mix(in srgb, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow:
+					var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, var(--lwt-accent-color, transparent)),
+					var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 20%, var(--lwt-accent-color, transparent)),
+					0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 4%, transparent)
+				!important;
+			}
+
+			#tabbrowser-tabs[orient="vertical"][movingtab][movingtab-group]:not([movingtab-addToGroup], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox .tabbrowser-tab[dragtarget] > .tab-stack > & {
+				background-color: color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, transparent) !important;
+			}
+
+			#tabbrowser-tabs[movingtab][movingtab-addToGroup]:not([movingtab-group], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab[dragtarget] > .tab-stack > & {
+				background-color: transparent !important;
+			}
+		}
+
+		> .tab-group-line {
+			background-color: transparent !important;
+			inset-block: 0 !important;
+			inset-inline: 0 !important;
+			border-radius: var(--tab-border-radius) !important;
+
+			#tabbrowser-tabs[orient="horizontal"] & {
+				height: var(--tab-min-height) !important;
+
+				tab-split-view-wrapper > .tabbrowser-tab:first-of-type & {
+					border-radius: var(--tab-border-radius) 0 0 var(--tab-border-radius) !important;
+				}
+
+				tab-split-view-wrapper > .tabbrowser-tab:last-of-type & {
+					border-radius: 0 var(--tab-border-radius) var(--tab-border-radius) 0 !important;
+				}
+			}
+
+			#tabbrowser-tabs[orient="vertical"] & {
+				width: auto !important;
+			}
+
+			#tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab:not([dragtarget]) & {
+				&:not(tab-split-view-wrapper > .tabbrowser-tab &) {
+					inset-inline: var(--tab-inner-inline-margin) !important;
+				}
+
+				tab-split-view-wrapper > .tabbrowser-tab:first-of-type & {
+					border-radius: var(--tab-border-radius) 0 0 var(--tab-border-radius) !important;
+				}
+			}
+
+			#tabbrowser-tabs[orient="vertical"]:not([expanded]) .tabbrowser-tab:not([dragtarget]) & {
+				inset-inline: var(--tab-inner-inline-margin) !important;
+
+				tab-split-view-wrapper > .tabbrowser-tab:first-of-type & {
+					border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0 !important;
+				}
+
+				tab-split-view-wrapper > .tabbrowser-tab:last-of-type & {
+					border-radius: 0 0 var(--tab-border-radius) var(--tab-border-radius) !important;
+				}
+			}
+
+			#tabbrowser-tabs[movingtab][movingtab-addToGroup]:not([movingtab-group], [movingtab-ungroup]) .tabbrowser-tab:not(:is(#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox, tab-group) .tabbrowser-tab):is(:active, [multiselected]) > .tab-stack > .tab-background > & {
+				background-color: color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, transparent) !important;
+				backdrop-filter: blur(12px);
+				animation: tab-hover-preview-fadein 300ms ease-out both;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"][movingtab][movingtab-addToGroup]:not([movingtab-group], [movingtab-ungroup]) > #tabbrowser-arrowscrollbox .tabbrowser-tab:not(tab-group .tabbrowser-tab):is(:active, [multiselected]) > .tab-stack > .tab-background > & {
+				background-color: color-mix(in srgb, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-invert)) 15%, var(--lwt-accent-color, transparent)) !important;
+				box-shadow:
+					var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 20%, var(--lwt-accent-color, transparent)),
+					var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 20%, var(--lwt-accent-color, transparent)),
+					0 0 0 var(--tab-group-label-highlight-thickness) color-mix(in oklab, light-dark(var(--dragover-tab-group-color), var(--dragover-tab-group-color-pale)) 8%, transparent);
+				backdrop-filter: blur(12px);
 			}
 		}
 
@@ -446,9 +792,17 @@
 	}
 
 	.tab-content {
-		font-size: 12.5px;
+		font-size: var(--default-font-size);
 
-		:root:not([uidensity="compact"]) #tabbrowser-tabs[orient="horizontal"] tab &[pinned] {
+		&[multiselected]:not(#tabbrowser-tabs[orient="vertical"]:not([expanded]) &, #pinned-tabs-container &):not([dragtarget] &) {
+			animation: emeTeachingMoment 1s ease-out infinite;
+		}
+
+		:root #tabbrowser-tabs[orient="horizontal"] tab &[pinned] {
+			padding: 0 var(--tab-inline-padding) !important;
+		}
+
+		#tabbrowser-tabs[orient="vertical"]:not([expanded]) tab-split-view-wrapper > .tabbrowser-tab > .tab-stack > & {
 			padding-inline: var(--tab-inline-padding) !important;
 		}
 
@@ -467,13 +821,13 @@
 			#tabbrowser-tabs[orient="horizontal"] &:not([pinned]) {
 				max-width: min-content;
 				margin-inline-end: auto;
-				padding-inline-end: calc(var(--size-item-xsmall) + var(--tab-inline-padding));
 
-				tab:is([muted], [soundplaying], [activemedia-blocked]) & {
-					padding-inline-end: calc(var(--tab-inline-padding) - var(--tab-icon-end-margin));
+				/* Compensate the padding of the tab with a normal close-button state to center the label. */
+				&:not(#tabbrowser-tabs[closebuttons="activetab"] &:not([selected], tab-split-view-wrapper > tab &)):not(tab:is([tab-note], [muted], [soundplaying], [activemedia-blocked]) &) {
+					padding-inline-end: calc(var(--size-item-xsmall) + var(--tab-inline-padding));
 				}
 
-				> .tab-label {
+				&[textoverflow] > .tab-label {
 					width: calc(100% + var(--size-item-xsmall));
 				}
 			}
@@ -485,29 +839,95 @@
 			}
 
 			> .tab-secondary-label {
-				margin-block: 0 !important;
+				margin: 0 !important;
 				font-size: 9px !important;
 			}
 
-			#tabbrowser-tabs[orient="horizontal"][overflow] tab:not([selected]) & {
+			#tabbrowser-tabs[orient="horizontal"][overflow] tab:not([selected], tab-split-view-wrapper > tab) & {
 				display: none;
 			}
 		}
 
+		> .tab-note-icon {
+			list-style-image: url("../assets/icons/tab-notes-12.svg") !important;
+			align-self: flex-start;
+			width: calc(var(--icon-size) + 4px) !important;
+			height: calc(var(--icon-size) + 4px) !important;
+			padding: 0 var(--tab-overflow-clip-margin) var(--tab-overflow-clip-margin) !important;
+			margin-inline-end: 0 !important;
+			fill: accentcolor !important;
+			#tabbrowser-arrowscrollbox .tabbrowser-tab:not([selected], [pending]) & {
+				fill: var(--icon-color) !important;
+				filter: invert(50%);
+			}
+
+			tab-group .tabbrowser-tab & {
+				fill: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
+			}
+
+			.tabbrowser-tab[usercontextid] & {
+				fill: var(--identity-icon-color) !important;
+			}
+
+			.tabbrowser-tab[tab-note] & {
+				transform-origin: top center;
+				animation: menuBounce 200ms ease-in-out backwards;
+			}
+
+			.tabbrowser-tab[pending] & {
+				filter: grayscale(100%) opacity(50%);
+			}
+		}
+
+		/* Ensure the speaker button and tab close button occupy the same amount of space. */
 		> .tab-audio-button {
 			--button-size-icon-small: var(--icon-size) !important;
-			--button-min-height-small: min(var(--tab-min-height), var(--size-item-medium)) !important;
-			--button-icon-fill: var(--toolbarbutton-icon-fill-attention) !important;
 			--button-background-color-ghost-hover: transparent !important;
 			--button-background-color-ghost-active: transparent !important;
-			margin-inline: var(--tab-icon-end-margin) 0 !important;
+			--button-text-color-ghost-hover: var(--color-accent-primary-hover) !important;
+			--button-text-color-ghost-active: var(--color-accent-primary-active) !important;
+			margin-inline-end: 0 !important;
 			order: 1;
+
+			#tabbrowser-tabs > #tabbrowser-arrowscrollbox > tab-group .tabbrowser-tab:not([usercontextid]) & {
+				--button-text-color-ghost-hover: color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 75%, transparent) !important;
+				--button-text-color-ghost-active: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
+			}
+
+			#tabbrowser-tabs > #tabbrowser-arrowscrollbox .tabbrowser-tab[usercontextid] & {
+				--button-text-color-ghost-hover: color-mix(in oklab, var(--identity-tab-color) 75%, transparent) !important;
+				--button-text-color-ghost-active: var(--identity-icon-color) !important;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:not([tab-note]) & {
+				margin-inline-start: var(--tab-inline-padding);
+			}
+
+			#tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab:not([tab-note]) & {
+				margin-inline-start: calc(var(--tab-inline-padding) / 2);
+			}
+
+			#tabbrowser-tabs .tabbrowser-tab[tab-note] & {
+				margin-inline-start: calc(var(--tab-icon-end-margin) - var(--tab-overflow-clip-margin));
+			}
+
+			&:is([tab-note], [muted], [soundplaying], [activemedia-blocked]) {
+				animation: tab-hover-preview-fadein 200ms ease-out both;
+			}
 		}
 
 		> .tab-icon-stack {
-			#tabbrowser-tabs[orient="horizontal"] .tab-content > & {
-				&:not([pinned], #tabbrowser-tabs[overflow] &:not([selected])) {
-					margin-inline-start: var(--tab-inline-padding);
+			#tabbrowser-tabs .tab-content[multiselected] > &:not(:is(#tabbrowser-tabs[orient="vertical"][expanded], #tabbrowser-tabs[orient="horizontal"]) > #tabbrowser-arrowscrollbox &):not([dragtarget] &) {
+				animation: Bounce 2s infinite;
+			}
+
+			#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox .tab-content > & {
+				&:not(#tabbrowser-tabs[overflow] &:not([selected])) {
+					margin-inline-start: auto;
+
+					.tabbrowser-tab[tab-note]:is([muted], [soundplaying], [activemedia-blocked]) &:not(:has(~ .tab-label-container[textoverflow])) {
+						padding-inline-start: calc(var(--icon-size-xsmall) + (var(--tab-icon-end-margin) - var(--tab-overflow-clip-margin)));
+					}
 				}
 
 				> .tab-icon-image:not([src], [busy]) {
@@ -515,18 +935,60 @@
 				}
 			}
 
-			#tabbrowser-tabs[orient="horizontal"][overflow] tab:not([selected], [pinned], [muted], [soundplaying], [activemedia-blocked]) .tab-content > & > * {
+			> .tab-note-icon-overlay {
+				list-style-image: url("../assets/icons/tab-notes-12.svg") !important;
+				background: none !important;
+				width: var(--icon-size-xsmall);
+				top: calc((var(--tab-min-height) - var(--icon-size-xsmall)) / -2) !important;
+				inset-inline-end: calc(var(--space-small) / -1 + 1px) !important;
+				padding: 0 !important;
+				fill: accentcolor !important;
+				#tabbrowser-tabs[orient="vertical"] & {
+					top: calc((var(--tab-min-height) - var(--icon-size)) / -2) !important;
+				}
+
+				#tabbrowser-tabs > :is(#pinned-tabs-container, #tabbrowser-arrowscrollbox[orient="vertical"]) .tabbrowser-tab:not([selected], [pending]) & {
+					fill: var(--icon-color) !important;
+					filter: invert(50%);
+				}
+
+				tab-group .tabbrowser-tab & {
+					fill: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
+				}
+
+				.tabbrowser-tab[usercontextid] & {
+					fill: var(--identity-icon-color) !important;
+				}
+
+				.tabbrowser-tab[tab-note] & {
+					transform-origin: top center;
+					animation: menuBounce 200ms ease-in-out backwards;
+				}
+
+				.tabbrowser-tab[pending] & {
+					filter: grayscale(100%) opacity(50%);
+				}
+			}
+
+			#tabbrowser-tabs[orient="horizontal"][overflow] > #tabbrowser-arrowscrollbox .tabbrowser-tab:not([selected], [muted], [soundplaying], [activemedia-blocked], tab-split-view-wrapper > .tabbrowser-tab) .tab-content > & > * {
 				margin-inline: calc((var(--tab-min-width-pref) - var(--size-item-small) - var(--tab-block-margin)) / 2 - var(--tab-inline-padding)) !important;
 			}
 
-			tab:not(#tabbrowser-tabs[movingtab] tab):hover .tab-content:not(:is(#tabbrowser-tabs[orient="vertical"]:not([expanded]), #tabbrowser-tabs[orient="horizontal"] tab) .tab-content) > &:not([pinned]),
-			tab:not(#tabbrowser-tabs[movingtab]:not(#tabbrowser-tabs[orient="vertical"]:not([expanded])[movingtab]) tab:not([pinned]), #tabbrowser-tabs[orient="horizontal"] tab:not([pinned])):is([muted], [soundplaying], [activemedia-blocked]):hover .tab-content > & > :is(.tab-icon-image, .tab-throbber) {
+			#tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox .tabbrowser-tab:hover .tab-content:not(:is(#tabbrowser-tabs[orient="vertical"]:not([expanded]), #tabbrowser-tabs[orient="horizontal"]) .tab-content) > &,
+			#tabbrowser-tabs:not([movingtab]) > :is(#tabbrowser-arrowscrollbox[orient="vertical"]:not(#tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox), #pinned-tabs-container) .tabbrowser-tab:is([muted], [soundplaying], [activemedia-blocked]):hover .tab-content > & > *:not(.tab-icon-overlay) {
 				display: none;
 			}
 
 			> .tab-icon-image {
 				fill: var(--toolbarbutton-icon-fill) !important;
-				border-radius: var(--border-radius-medium);
+
+				&:not(#tabbrowser-tabs[orient="vertical"][expanded] &) {
+					border-radius: var(--tab-border-radius);
+				}
+
+				&[pending] {
+					filter: grayscale(100%) opacity(50%);
+				}
 
 				tab:is([label="New Tab"], [label="New Private Tab"]) & {
 					content: url("../assets/icons/favicon.svg");
@@ -551,42 +1013,57 @@
 
 			> .tab-icon-overlay {
 				inset: auto !important;
-				fill: var(--toolbarbutton-icon-fill-attention) !important;
 
-				:is(#tabbrowser-tabs[orient="vertical"]:not([expanded]), [pinned]) &:is([soundplaying], [muted], [activemedia-blocked]) {
+				.tabbrowser-tab[usercontextid] & {
+					--audio-overlay-extra-background: color-mix(in oklab, var(--identity-icon-color) 50%, transparent) !important;
+
+					&:hover {
+						--audio-overlay-extra-background: color-mix(in oklab, var(--identity-icon-color) 75%, transparent) !important;
+
+						&:active {
+							--audio-overlay-extra-background: var(--identity-icon-color) !important;
+						}
+					}
+				}
+
+				:is(#tabbrowser-tabs > #pinned-tabs-container, #tabbrowser-tabs[orient="vertical"]:not([expanded]) > #tabbrowser-arrowscrollbox) &:is([soundplaying], [muted], [activemedia-blocked]) {
 					display: none;
 
-					tab:hover & {
+					tab:not([dragtarget]):hover & {
 						display: revert;
-						animation: urlbar-zoom-reset-pulse 250ms ease-in-out;
+						animation: tab-hover-preview-fadein 300ms ease-out both;
 					}
 				}
 			}
 		}
 
 		> .tab-close-button {
-			background-color: var(--neptune-button-field-color) !important;
+			background-color: var(--nept-button-field-color) !important;
 			fill: Field !important;
-			border-radius: var(--border-radius-small) !important;
+			border-radius: calc(var(--tab-border-radius) / 2) !important;
 			order: -1;
 
 			#tabbrowser-tabs[orient="horizontal"] & {
-				margin-inline-end: auto !important;
+				margin-inline-end: var(--tab-inline-padding) !important;
 				visibility: hidden;
 
 				tab:not([dragtarget]):hover & {
 					visibility: visible;
-					animation: tab-hover-preview-fadein 0.3s ease-in-out both;
+					animation: tab-hover-preview-fadein 0.3s ease-out both;
+				}
+
+				#tabbrowser-tabs[closebuttons="activetab"][orient="horizontal"] tab-split-view-wrapper &:not([selected]) {
+					display: revert !important;
 				}
 			}
 
-			#tabbrowser-tabs[orient="vertical"] & {
+			#tabbrowser-tabs[orient="vertical"][expanded] & {
 				margin-inline-end: calc(var(--tab-icon-end-margin) + 4px) !important;
 				display: none;
 
-				tab:not(#tabbrowser-tabs[movingtab] tab):hover &:not([pinned], #tabbrowser-tabs[orient="vertical"]:not([expanded]) tab:is([muted], [soundplaying], [activemedia-blocked]) &) {
+				#tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox .tabbrowser-tab:hover & {
 					display: revert !important;
-					animation: tab-hover-preview-fadein 0.3s ease-in-out both;
+					animation: tab-hover-preview-fadein 0.3s ease-out both;
 				}
 			}
 
@@ -598,19 +1075,40 @@
 				inset: calc(-1 * var(--space-xsmall)) var(--space-xsmall) !important;
 				box-shadow: none !important;
 				outline: none !important;
-				border-radius: var(--border-radius-large) !important;
+				transition: opacity 200ms ease-out;
 
-				tab-group:not([collapsed]) > .tabbrowser-tab & {
+				&:focus-visible {
+					outline: 2px solid AccentColor !important;
+					outline-offset: -2px !important;
+				}
+
+				:is(tab-group:not([collapsed]) .tabbrowser-tab, tab-group[collapsed] > .tabbrowser-tab[visuallyselected]) & {
 					background-color: light-dark(var(--tab-group-color), var(--tab-group-color-invert)) !important;
 				}
 
-				.tabbrowser-tab:is([muted], [soundplaying], [activemedia-blocked]) & {
-					display: none !important;
+				#tabbrowser-tabs .tabbrowser-tab[usercontextid] & {
+					background-color: var(--identity-icon-color) !important;
+				}
+
+				tab-split-view-wrapper > .tabbrowser-tab:last-of-type & {
+					inset-block-start: 0 !important;
+				}
+
+				#tabbrowser-tabs[movingtab] & {
+					opacity: 0 !important;
+				}
+
+				&:hover {
+					filter: brightness(120%);
+
+					&:active {
+						filter: brightness(90%);
+					}
 				}
 			}
 
 			&:hover {
-				background-color: var(--neptune-button-field-hover-color) !important;
+				background-color: var(--nept-button-field-hover-color) !important;
 
 				&:active {
 					background-color: currentColor !important;
@@ -620,15 +1118,18 @@
 
 		.tabbrowser-tab[pending] & {
 			color: var(--text-color-disabled);
-			transition: color 1s linear;
+			transition: color 1s ease-out;
 		}
 	}
 }
 
 .all-tabs-item {
-	&[selected]:not(:hover) {
+	&[selected] {
 		font-weight: unset !important;
-		background-color: var(--button-background-color);
+
+		&:not(:hover) {
+			background-color: var(--button-background-color);
+		}
 	}
 
 	> .all-tabs-secondary-button {
@@ -641,7 +1142,7 @@
 }
 
 .tab-group-editor-panel {
-	--panel-padding: var(--space-small) var(--space-medium) !important;
+	--panel-padding: var(--space-medium) !important;
 	--panel-separator-padding: var(--arrowpanel-menuitem-margin-inline) !important;
 	--button-border: none !important;
 	--button-min-height-small: var(--button-min-height) !important;
@@ -652,47 +1153,81 @@
 		padding: 0 !important;
 
 		> h1 {
-			margin-block: var(--space-xsmall) !important;
+			margin: var(--space-xsmall) !important;
 		}
 	}
 
-	.tab-group-editor-name, .tab-group-editor-swatches {
+	.tab-group-editor-name,
+	.tab-group-editor-swatches {
 		padding-block: var(--panel-subview-body-padding-block) !important;
-		margin-inline: var(--arrowpanel-menuitem-margin-inline);
+		padding-inline: var(--arrowpanel-menuitem-margin-inline);
 	}
 
 	.tab-group-editor-swatch {
-		border-radius: var(--border-radius-circle) !important;
+		border-radius: var(--tab-border-radius) !important;
 	}
 }
 
-.tab-preview-text-container {
-	padding: var(--space-medium) !important;
-	order: 1;
+.tab-note-editor-panel {
+	--panel-padding: var(--space-medium) !important;
+
+	> .panel-header {
+		min-height: auto !important;
+
+		> h1 {
+			margin: var(--space-xsmall) !important;
+		}
+	}
+
+	> .panel-body {
+		padding-block: 0 var(--space-medium) !important;
+	}
 }
 
-.tab-preview-thumbnail-container {
-	border: none !important;
+#tab-preview-panel {
+	> .tab-preview-text-container {
+		padding: var(--space-large) !important;
+		order: 1;
+	}
+
+	> .tab-preview-thumbnail-container {
+		border: none !important;
+	}
 }
 
-#scrollbutton-up, #scrollbutton-down { 
-	border-radius: var(--border-radius-circle) !important;
+#scrollbutton-up[tooltiptext="Scroll backwards"],
+#scrollbutton-down[tooltiptext="Scroll forwards"] {
+	--arrowscrollbox-scrollicon-padding: var(--scrollbutton-padding, 0) !important;
 	/*display: var(--scrollbutton-display, inherit);*/
 }
 
-/* Restore/align the + New Tab button in the horizontal TabsToolbar */
-#TabsToolbar > #tabs-newtab-button,
-#TabsToolbar > #new-tab-button {
-	/* Ensure it renders and aligns like a tab */
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	height: var(--tab-min-height) !important;
-	min-height: var(--tab-min-height) !important;
-	border-radius: var(--border-radius-circle) !important;
-	/* Reasonable spacing around it */
-	margin-block: 0 !important;
-	margin-inline: var(--tab-inline-padding) !important;
-	/* Don’t let flex collapse it or stretch it */
-	flex: 0 0 auto !important;
+@media (prefers-reduced-motion: reduce) {
+	#tabbrowser-tabs :is(.tabbrowser-tab, .tab-background, .tab-content, .tab-group-label-container, .tab-group-label, .tab-group-line, .tab-note-icon, .tab-note-icon-overlay, .tab-audio-button, .tab-icon-stack, .tab-icon-overlay, .tab-close-button),
+	#tabbrowser-tabs > #vertical-pinned-tabs-splitter {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	#tabbrowser-tabs :is(.tab-background, .tab-group-label, .tab-group-line) {
+		backdrop-filter: none !important;
+	}
+}
+
+@media (forced-colors: active) {
+	#tabbrowser-tabs :is(.tab-background, .tab-group-label, .tab-group-line) {
+		backdrop-filter: none !important;
+		box-shadow: none !important;
+	}
+
+	#tabbrowser-tabs .tabbrowser-tab:is([selected], [visuallyselected], [multiselected]) > .tab-stack > .tab-background,
+	#tabbrowser-tabs .tabbrowser-tab:focus-visible > .tab-stack > .tab-background,
+	#tabbrowser-tabs .tab-group-label:focus-visible,
+	#tabbrowser-tabs > #pinned-drop-indicator:focus-visible,
+	#tabbrowser-tabs tab-split-view-wrapper:focus-visible,
+	#tabbrowser-tabs .tab-close-button:focus-visible {
+		outline: 2px solid Highlight !important;
+		outline-offset: -2px !important;
+	}
 }

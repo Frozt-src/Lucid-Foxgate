@@ -1,5 +1,3 @@
-@import "neptune/colors/light.css";
-@import "neptune/colors/dark.css";
 @import "neptune/share/shared.css";
 @import "neptune/firefox/root.css";
 @import "neptune/firefox/aboutpage.css";
@@ -7,13 +5,21 @@
 @import "neptune/firefox/reader.css";
 @import "neptune/firefox/firefoxview.css";
 @import "neptune/firefox/pdf.css";
+/* This style is only activated when "Toolbox_transparent_startpage.css" in "userChrome.css" is enabled. */
+@import "neptune/optionals/Startpage_for_transparent_toolbox.css";
 
 @-moz-document url("about:home"), url("about:newtab") {
 	body {
-		background: url("neptune/assets/background_image/Flowers_Light.svg") center/cover fixed !important;
+		/* Topographic Amoeba wallpapers by @BasicAppleGuy */
+		background: url("neptune/assets/background_image/Vannella_Hills_Light.png") center/cover fixed !important;
 
 		@media (prefers-color-scheme: dark) {
-			background: url("neptune/assets/background_image/Flowers_Dark.svg") center/cover fixed !important;
+			background: url("neptune/assets/background_image/Vannella_Hills_Dark.png") center/cover fixed !important;
+		}
+
+		@media (forced-colors: active) {
+			background-image: none !important;
+			background-color: Canvas !important;
 		}
 
 		&:not(.inline-onboarding) .fixed-search .search-wrapper {
@@ -27,6 +33,6 @@
 
 @-moz-document url("about:privatebrowsing") {
 	body {
-		background: url("neptune/assets/background_image/Flowers_Purple.svg") center/cover fixed;
+		background: url("neptune/assets/background_image/Chaos_Ridge_Dark.png") center/cover fixed;
 	}
 }

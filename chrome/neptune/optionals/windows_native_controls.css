@@ -1,0 +1,90 @@
+/* Windows native title buttons */
+@media (-moz-platform: windows) {
+	:root {
+		--window-controls-size: 108px !important;
+	}
+
+	@media (min-width: 770px) {
+		#nav-bar > #nav-bar-customization-target:not(#widget-overflow-fixed-list) #urlbar-container ~ toolbarspring:where(:not(#vertical-spacer)) {
+			#nav-bar:not([customizing]) & {
+				flex-grow: 360 !important;
+
+				:root[taskbartab] & {
+					flex-grow: 400 !important;
+				}
+			}
+
+			#nav-bar:not([customizing]):is([downloadsbuttonshown], [unifiedextensionsbuttonshown]) & {
+				flex-grow: 300 !important;
+			}
+
+			#nav-bar:not([customizing])[downloadsbuttonshown][unifiedextensionsbuttonshown] & {
+				flex-grow: 240 !important;
+			}
+		}
+	}
+
+	#navigator-toolbox #nav-bar {
+		padding-inline-start: var(--space-xsmall) !important;
+
+		@media not -moz-pref("sidebar.verticalTabs") {
+			:root[privatebrowsingmode=temporary] & {
+				padding-inline-start: var(--space-xsmall) !important;
+			}
+		}
+	}
+
+	.titlebar-buttonbox-container {
+		align-items: center !important;
+
+		.titlebar-button {
+			margin: 4px 8px !important;
+			padding: 5px !important;
+			border-radius: var(--border-radius-large);
+			color: DimGray !important;
+
+			&.titlebar-min {
+				content: "\ef2d" !important;
+			}
+
+			&.titlebar-max {
+				content: "\ef2e" !important;
+			}
+
+			&.titlebar-restore {
+				content: "\ef2f" !important;
+			}
+
+			&.titlebar-close {
+				content: "\ef2c" !important;
+
+				&:hover {
+					background-color: #C42B1C !important;
+					color: PeachPuff !important;
+
+					&:active {
+						background-color: #C83F31 !important;
+					}
+				}
+			}
+		}
+	}
+
+	@media not -moz-pref("sidebar.verticalTabs") {
+		#PanelUI-menu-button {
+			:root:not([inFullscreen]) & {
+				margin-inline-end: calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+			}
+		}
+
+		.titlebar-buttonbox-container  {
+			position: absolute;
+			inset-inline-end: 0;
+			inset-block-start: calc(var(--nept-browser-toolbox-padding) + (var(--urlbar-min-height) - 28px) / 2);
+
+			:root[inFullscreen] & {
+				display: none;
+			}
+		}
+	}
+}

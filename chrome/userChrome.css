@@ -1,66 +1,33 @@
 @import "neptune/theme/main.css";
 
 /* On Windows, you must choose one of the titlebar buttons. macOS can ignore it. */
-@import "neptune/extras/macos_controls.css";
-/* @import "neptune/extras/windows_native_controls.css"; */
+@import "neptune/optionals/macos_controls.css";
+/* @import "neptune/optionals/windows_native_controls.css"; */
 
-/* Extras */
-/* @import "neptune/extras/Show_bookmarks_bar_on_hover.css"; */
+/* Optionals */
+/* @import "neptune/optionals/Show_bookmarks_bar_on_hover.css"; */
 
-/* ===== Glassier UI overrides (adjust here) =====
-	 Tip: Lower alpha or lower the color-mix percentages for more transparency.
-	 This layer sits AFTER the theme import, so it’s easy to tweak or remove. */
+/* This style will make the homepage toolbox completely transparent and display the background image.
+It must work together with “Startpage_for_transparent_toolbox.css” in "userContent.css". */
+@import "neptune/optionals/Toolbox_transparent_startpage.css";
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		/* Overall window and content surfaces at ~31% opacity (69% transparent) */
-		--neptune-main-background: #1c1b224f !important;
-		--neptune-content-background: #15141a4f !important;
-		/* Panels/menus/popups */
-		--neptune-secondary-background: #1e1e1e4f !important; /* ~31% */
+/* macOS Tahoe floating toolbar */
+@import "neptune/optionals/macos_tahoe_theme_toolbar.css";
 
-		/* Tabs strip base behind tabs (default ~30% -> ~20%). */
-		--neptune-tabs-default-background: #bcbcbc4f !important; /* ~31% */
+/* Lightweight Apple-inspired glass and tab motion. */
+@import "neptune/optionals/liquid_glass.css";
 
-		/* Toolbars inherit the LWT accent; mix it to 31% opacity for consistency */
-		--neptune-toolbar-background: color-mix(in srgb, var(--lwt-accent-color) 31%, transparent) !important;
-
-		/* URL bar surface (reduce currentColor contribution for more transparency). */
-		--neptune-urlbar-background: color-mix(in srgb, currentColor 8%, var(--lwt-accent-color, transparent)) !important;   /* was ~12% */
-		--neptune-urlbar-hover-background: color-mix(in srgb, currentColor 10%, var(--lwt-accent-color, transparent)) !important; /* was ~16% */
-		--neptune-urlbar-focused-background: color-mix(in srgb, currentColor 14%, var(--lwt-accent-color, transparent)) !important; /* was ~20% */
-
-		/* General item rows/cards/buttons */
-		--neptune-item-background: color-mix(in srgb, currentColor 8%, transparent) !important;    /* was ~12% */
-		--neptune-item-hover-background: color-mix(in srgb, currentColor 12%, transparent) !important; /* was ~14% */
-		--neptune-item-active-background: color-mix(in srgb, currentColor 14%, transparent) !important; /* was ~16% */
+/* Keep the macOS-style window controls clear of the navigation row on Windows. */
+@media (-moz-platform: windows) {
+	:root:not([inFullscreen]) #navigator-toolbox #nav-bar {
+		padding-inline-start: calc(var(--window-controls-size, 76px) + 36px) !important;
+		margin-block-start: 2px !important;
 	}
 }
 
-@media (prefers-color-scheme: light) {
-	:root {
-		/* Overall window and content surfaces at ~31% opacity (69% transparent) */
-		--neptune-main-background: #f6f6f64f !important;
-		--neptune-content-background: #ffffff4f !important;
-		/* Panels/menus/popups */
-		--neptune-secondary-background: #fafafa4f !important; /* ~31% */
-
-		/* Tabs strip base behind tabs */
-		--neptune-tabs-default-background: #c9c9c94f !important; /* ~31% */
-
-		/* Toolbars inherit the LWT accent; mix it to 31% opacity for consistency */
-		--neptune-toolbar-background: color-mix(in srgb, var(--lwt-accent-color) 31%, transparent) !important;
-
-		/* URL bar surface */
-		--neptune-urlbar-background: color-mix(in srgb, currentColor 6%, var(--lwt-accent-color, transparent)) !important;   /* was ~8% */
-		--neptune-urlbar-hover-background: color-mix(in srgb, currentColor 8%, var(--lwt-accent-color, transparent)) !important;  /* was ~12% */
-		--neptune-urlbar-focused-background: color-mix(in srgb, currentColor 10%, var(--lwt-accent-color, transparent)) !important; /* was ~16% */
-
-		/* General item rows/cards/buttons */
-		--neptune-item-background: color-mix(in srgb, currentColor 6%, transparent) !important;    /* was ~10% */
-		--neptune-item-hover-background: color-mix(in srgb, currentColor 8%, transparent) !important; /* was ~8% (kept gentle) */
-		--neptune-item-active-background: color-mix(in srgb, currentColor 10%, transparent) !important; /* was ~14% */
+/* Add a subtle Safari-like gap between the address bar and horizontal tabs. */
+@media not -moz-pref("sidebar.verticalTabs") {
+	#navigator-toolbox #TabsToolbar {
+		margin-block-start: 2px !important;
 	}
 }
-
-/* ===== End glass overrides ===== */

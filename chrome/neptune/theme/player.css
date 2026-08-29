@@ -1,24 +1,27 @@
 @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
 	:root {
 		--player-bg-color: transparent !important;
-		--controls-bottom-upper-height: 34px !important;
 	}
 
 	body {
 		clip-path: var(--in-content-clip-path);
 	}
 
-	* {
+	#controls .control-item {
 		cursor: default !important;
+
+		&::after {
+			content: none !important;
+		}
 	}
 
 	#controls-bottom-gradient {
 		background: #202020a5 !important;
 		backdrop-filter: saturate(1.5) blur(2em);
-		height: calc(var(--player-control-item-height) + var(--controls-bottom-upper-height) + var(--scrubber-vertical-margin)) !important;
+		height: calc(var(--player-control-item-height) + var(--controls-bottom-upper-height) + var(--scrubber-vertical-margin) + var(--resize-margin)) !important;
 		width: min((50% + var(--player-control-item-half-width)), 30em) !important;
 		border-radius: var(--border-radius-large);
-		inset: auto calc((100% + 2 * var(--resize-margin) - min((50% + var(--player-control-item-half-width)), 30em)) / 2) calc(15vmin + var(--resize-margin) + 1px) !important;
+		inset: auto calc((100% + 2 * var(--resize-margin) - min((50% + var(--player-control-item-half-width)), 30em)) / 2) calc(15vmin + var(--scrubber-vertical-margin) / 2) !important;
 
 		#controls:is([keying], [showing], body:not(:fullscreen) #controls:hover) & {
 			opacity: unset !important;
@@ -69,7 +72,8 @@
 		background-color: unset !important;
 	}
 
-	#unpip, #close {
+	#unpip,
+	#close {
 		background-color: #ffffffa5 !important;
 		backdrop-filter: saturate(1.5) blur(8px);
 		height: 16px !important;
@@ -96,13 +100,18 @@
 			filter: drop-shadow(0 0 1px #0000080);
 		}
 
+		&,
 		&::-moz-range-track,
-		&::-moz-range-progress, & {
+		&::-moz-range-progress {
 			height: 4px !important;
 		}
 
 		&::-moz-range-progress {
 			background-color: var(--color-accent-primary) !important;
+		}
+
+		@media (width <= 660px) {
+			display: none;
 		}
 	}
 
@@ -110,8 +119,9 @@
 		height: 19px !important;
 
 		> #scrubber {
+			&,
 			&::-moz-range-track,
-			&::-moz-range-progress, & {
+			&::-moz-range-progress {
 				height: 3px !important;
 			}
 
@@ -149,6 +159,7 @@
 
 				> .switch {
 					margin-left: 6px !important;
+					cursor: default !important;
 				}
 			}
 		}
@@ -170,11 +181,19 @@
 		}
 	}
 
-	.font-size-selection-radio > input[type="radio"] {
-		border: 2px solid #cacaca80 !important;
+	.font-size-selection-radio {
+		cursor: default !important;
 
-		&:checked {
-			border: none !important;
+		label {
+			cursor: default !important;
+		}
+
+		> input[type="radio"] {
+			border: 2px solid #cacaca80 !important;
+
+			&:checked {
+				border: none !important;
+			}
 		}
 	}
 
@@ -212,26 +231,35 @@
 		body:fullscreen & {
 			background-image: url("../assets/icons/fullscreen-exit.svg") !important;
 		}
+
+		@media (width <= 880px) {
+			display: none;
+		}
 	}
 
 	#closed-caption {
 		background-image: url("../assets/icons/closed-caption-settings-button.svg") !important;
+
+		@media (width <= 780px) {
+			display: none;
+		}
 	}
 }
 
 .pointerlockfswarning {
-	background-color: var(--neptune-glass-background) !important;
+	background-color: var(--nept-glass-background) !important;
 	backdrop-filter: saturate(1.2) blur(1em);
-	color: var(--button-text-color-primary) !important;
 	padding: var(--space-medium) !important;
 	border: none !important;
-	box-shadow: var(--neptune-glass-shadow) !important;
+	border-radius: var(--border-radius-circle) !important;
+	box-shadow: var(--nept-glass-shadow) !important;
 
 	> #fullscreen-exit-button {
 		appearance: none !important;
-		background-color: var(--neptune-content-background);
+		background-color: var(--color-accent-primary);
+		padding-inline: var(--space-small);
 		border: none;
-		border-radius: var(--toolbarbutton-border-radius);
+		border-radius: var(--border-radius-medium);
 	}
 
 	> .pointerlockfswarning-domain-text {

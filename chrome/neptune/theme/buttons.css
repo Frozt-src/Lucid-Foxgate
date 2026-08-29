@@ -2,28 +2,26 @@
 toolbar .toolbarbutton-1 {
 	padding: 0 !important;
 	margin-inline: calc(var(--toolbar-start-end-padding) / 2) !important;
-	opacity: unset !important;
 	transition: opacity var(--inactive-window-transition);
 
 	> .toolbarbutton-icon,
 	> .toolbarbutton-text,
 	> .toolbarbutton-badge-stack {
 		outline: none !important;
-		border-radius: var(--border-radius-small) !important;
 		box-shadow: none !important;
 		clip-path: circle(50%);
-		transition: background-color 0.2s ease-out;
+		transition: var(--ext-theme-background-transition);
 	}
 
-	#nav-bar &:-moz-window-inactive {
+	#nav-bar &:not(:where([disabled="true"])):-moz-window-inactive {
 		opacity: var(--inactive-titlebar-opacity) !important;
 	}
 
-	&:not(:is(#nav-bar, #PersonalToolbar) &:not(:where([disabled="true"]):not(#reload-button))) {
+	/*&:not(:is(#nav-bar, #PersonalToolbar) &:not(:where([disabled="true"]):not(#reload-button))) {
 		:root:not([customizing]) & {
 			display: none;
 		}
-	}
+	}*/
 }
 
 toolbar .toolbaritem-combined-buttons {
@@ -52,9 +50,9 @@ toolbar .toolbaritem-combined-buttons {
 	.toolbarbutton-badge {
 		background-color: var(--color-accent-primary) !important;
 		border-radius: var(--border-radius-large) !important;
-		min-width: 14px !important;
-		padding-inline: 0 !important;
-		line-height: 14px !important;
+		min-width: var(--size-item-small) !important;
+		padding: 0 !important;
+		line-height: var(--size-item-small) !important;
 		font-weight: normal !important;
 
 		toolbarbutton:is(:active, [open]) & {
@@ -77,39 +75,48 @@ screenshots-buttons {
 	font-size: smaller !important;
 }
 
-input[type=checkbox],
+input[type="checkbox"],
 .checkbox-check:not([native]) {
 	appearance: none !important;
-	width: 14px !important;
-	height: 14px !important;
-	border: var(--neptune-checkbox-border);
+	background-color: var(--nept-checkbox-background);
+	width: var(--input-icon-size) !important;
+	height: var(--input-icon-size) !important;
+	border: var(--nept-checkbox-border);
 	border-radius: var(--border-radius-xsmall);
-	box-shadow: var(--neptune-checkbox-shadow);
+	box-shadow: var(--nept-checkbox-shadow);
 
 	&:is(:checked, [checked="true"]) {
-		background-color: var(--theme-primary-color) !important;
+		background-color: var(--color-accent-primary) !important;
 		background-image: url("../assets/icons/check.svg");
 		border: none;
 	}
 }
 
-input[type=radio] {
+input[type="radio"] {
 	appearance: none !important;
-	width: 14px !important;
-	height: 14px !important;
-	border: var(--neptune-checkbox-border);
+	background-color: var(--nept-checkbox-background);
+	width: var(--input-icon-size) !important;
+	height: var(--input-icon-size) !important;
+	border: var(--nept-checkbox-border);
 	border-radius: var(--border-radius-medium);
-	box-shadow: var(--neptune-checkbox-shadow);
+	box-shadow: var(--nept-checkbox-shadow);
 
 	&:checked {
-		background-color: var(--theme-primary-color) !important;
+		background-color: var(--color-accent-primary) !important;
 		background-image: url("../assets/icons/radio.svg");
 		border: none;
 	}
 }
 
 .toggle-button {
-	--toggle-dot-background-color: var(--neptune-slider-color) !important;
-	--toggle-dot-background-color-on-pressed: var(--neptune-slider-color) !important;
-	--toggle-border-color: var(--neptune-toolbar-border-color) !important;
+	--toggle-dot-background-color: var(--nept-slider-color) !important;
+	--toggle-dot-background-color-on-pressed: var(--nept-slider-color) !important;
+	--toggle-border-color: var(--nept-toolbar-border-color) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	toolbar .toolbarbutton-1,
+	toolbar .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+		transition: none !important;
+	}
 }

@@ -1,157 +1,172 @@
+@-moz-document url-prefix("about:"), url-prefix("chrome:"), url-prefix("resource:"), regexp(".*\\.pdf") {
 :root {
-	--background-color-canvas: var(--neptune-main-background) !important;
-	--in-content-table-background: var(--neptune-content-background) !important;
-	--in-content-border-color: var(--neptune-content-border-color) !important;
-	--in-content-box-background: var(--neptune-content-background) !important;
-	--in-content-box-info-background: var(--neptune-content-background) !important;
-	--in-content-focus-outline-color: var(--neptune-input-outline-color) !important;
-	--table-row-background-color: var(--neptune-main-background) !important;
-	--table-row-background-color-alternate: var(--neptune-content-background) !important;
-	--background-color-box: var(--neptune-menu-background) !important;
+	--background-color-canvas: var(--nept-background-canvas) !important;
+	--in-content-table-background: var(--nept-content-background) !important;
+	--in-content-box-info-background: var(--nept-content-background) !important;
+	--background-color-box-info: var(--nept-background-canvas) !important;
+	--table-row-background-color: var(--nept-background-canvas) !important;
+	--table-row-background-color-alternate: var(--nept-content-background) !important;
+	--background-color-box: var(--nept-menu-background) !important;
 	--newtab-primary-element-text-color: #fff !important;
-	--newtab-background-color: var(--neptune-main-background) !important;
-	--newtab-background-color-secondary: var(--neptune-secondary-background) !important;
-	--newtab-background-card: var(--neptune-secondary-background) !important;
-	--newtab-element-hover-color: var(--neptune-item-hover-background) !important;
-	--newtab-element-active-color: var(--neptune-item-active-background) !important;
-	--newtab-border-color: var(--neptune-toolbar-border-color) !important;
-	--border-color-deemphasized: var(--neptune-toolbar-border-color) !important;
-	--fxview-border: var(--neptune-toolbar-border-color) !important;
-	--sidebar-toolbar-bg-color: var(--neptune-main-background) !important;
-	--thumbnail-hover-color: var(--theme-primary-hover-color) !important;
-	--thumbnail-selected-color: var(--theme-primary-active-color) !important;
-	--checkbox-checked-bgcolor: var(--theme-primary-color) !important;
-	--checkbox-checked-hover-bgcolor: var(--theme-primary-hover-color) !important;
-	--checkbox-checked-active-bgcolor: var(--theme-primary-active-color) !important;
-	--focus-outline-color: var(--neptune-input-outline-color) !important;
-	--brand-color-accent: var(--theme-primary-color) !important;
-	--brand-color-accent-hover: var(--theme-primary-hover-color) !important;
-	--brand-color-accent-active: var(--theme-primary-active-color) !important;
-	--newtab-primary-action-background: var(--theme-primary-color) !important;
-	--theme-arrowpanel-background: var(--neptune-menu-background) !important;
-	--theme-arrowpanel-border-color: var(--neptune-toolbar-border-color) !important;
-	--theme-body-background: var(--neptune-main-background) !important;
-	--theme-link-color: var(--theme-primary-color) !important;
-	--theme-icon-checked-color: var(--theme-primary-active-color) !important;
-	--theme-selection-background: var(--theme-primary-active-color) !important;
-	--theme-selection-background-hover: var(--neptune-item-selection-hover-background) !important;
-	--theme-text-selection-background: var(--neptune-item-selection-hover-background) !important;
-	--theme-tab-toolbar-background: var(--neptune-main-background) !important;
-	--theme-toolbar-background: var(--neptune-main-background) !important;
-	--theme-toolbar-hover: var(--neptune-item-hover-background) !important;
-	--theme-toolbar-hover-active: var(--neptune-item-active-background) !important;
-	--theme-toolbar-selected-color: var(--theme-primary-color) !important;
-	--theme-toolbar-alternate-hover: var(--neptune-item-active-background) !important;
-	--theme-focus-textinput-outline-color: var(--neptune-input-outline-color) !important;
+	--newtab-background-color: var(--nept-background-canvas) !important;
+	--newtab-background-color-secondary: var(--nept-secondary-background) !important;
+	--newtab-background-card: var(--nept-secondary-background) !important;
+	--newtab-element-hover-color: var(--nept-item-hover-background) !important;
+	--newtab-element-active-color: var(--nept-item-active-background) !important;
+	--newtab-border-color: var(--nept-toolbar-border-color) !important;
+	--border-color-deemphasized: var(--nept-toolbar-border-color) !important;
+	--fxview-border: var(--nept-toolbar-border-color) !important;
+	--sidebar-toolbar-bg-color: var(--nept-background-canvas) !important;
+	--thumbnail-hover-color: var(--color-accent-primary-hover) !important;
+	--thumbnail-selected-color: var(--color-accent-primary-active) !important;
+	--checkbox-checked-bgcolor: var(--color-accent-primary) !important;
+	--checkbox-checked-hover-bgcolor: var(--color-accent-primary-hover) !important;
+	--checkbox-checked-active-bgcolor: var(--color-accent-primary-active) !important;
+	--focus-outline-color: var(--nept-input-outline-color) !important;
+	--brand-color-accent: var(--color-accent-primary) !important;
+	--brand-color-accent-hover: var(--color-accent-primary-hover) !important;
+	--brand-color-accent-active: var(--color-accent-primary-active) !important;
+	--newtab-primary-action-background: var(--color-accent-primary) !important;
+	--theme-arrowpanel-background: menu !important;
+	--theme-arrowpanel-border-color: var(--nept-toolbar-border-color) !important;
+	--theme-arrowpanel-separator: var(--nept-separator-color) !important;
+	--theme-body-background: var(--nept-background-canvas) !important;
+	--theme-link-color: var(--color-accent-primary) !important;
+	--theme-icon-checked-color: var(--color-accent-primary-active) !important;
+	--theme-selection-background: var(--color-accent-primary-active) !important;
+	--theme-selection-background-hover: var(--nept-item-selection-hover-background) !important;
+	--theme-text-selection-background: var(--nept-item-selection-hover-background) !important;
+	--theme-tab-toolbar-background: var(--nept-background-canvas) !important;
+	--theme-toolbar-background: var(--nept-background-canvas) !important;
+	--theme-toolbar-hover: var(--nept-item-hover-background) !important;
+	--theme-toolbar-hover-active: var(--nept-item-active-background) !important;
+	--theme-toolbar-selected-color: var(--color-accent-primary) !important;
+	--theme-toolbar-alternate-hover: var(--nept-item-active-background) !important;
+	--theme-focus-textinput-outline-color: var(--nept-input-outline-color) !important;
 	--button-min-height: 24px !important;
+	--button-padding: 0 var(--space-large) !important;
 	--theme-toolbar-height: var(--button-min-height) !important;
 	--theme-arrowpanel-border-radius: 8px !important;
 	--tab-line-selected-color: transparent !important;
 	--tab-line-hover-color: transparent !important;
-	--font-size-root: 12.5px !important;
+	--font-size-root: var(--default-font-size) !important;
 	--font-size-small: 0.96rem !important;
 	--font-size-large: 1.2rem !important;
 	--font-size-xlarge: 1.44rem !important;
 	--font-size-xxlarge: 1.76rem !important;
+	--font-size-xxxlarge: 2rem !important;
 	--space-xsmall: 0.32rem !important;
-	--size-item-medium: 28px !important;
 }
 
 ::selection {
-	background-color: var(--neptune-item-selection-background) !important;
+	background-color: var(--nept-item-selection-background) !important;
+}
 }
 
-.pip-wrapper {
-	--pip-icon-size: 20px !important;
-	cursor: default !important;
-	inset: calc(80% - 36px) auto auto calc(50% - 18px) !important;
-	display: none;	/*The PIP floating button is hidden here.*/
+.videocontrols {
+	/* The PIP floating button is shown by default. It can be disabled in General settings. */
+	.pip-wrapper {
+		inset: calc(80% - var(--pip-icon-width-with-margins)) auto auto calc(50% - var(--pip-icon-width-with-margins) / 2) !important;
+		cursor: default !important;
 
-	> .pip-small {
-		width: 36px !important;
-		height: 36px !important;
+		&:not(.experiment) > .pip-small {
+				background-color: #ffffff3f !important;
+				backdrop-filter: saturate(1.5) blur(6px);
+				border: none !important;
+				border-radius: var(--border-radius-circle, 99px) !important;
+				box-shadow: var(--nept-glass-shadow, inset 1px 1px 1px #ffffff80, inset -1px -1px 1px 0.5px #ffffff80) !important;
+		}
 
-		.pip-wrapper:not(.experiment) > & {
-			background-color: #ffffff3f !important;
-			backdrop-filter: saturate(1.5) blur(6px);
-			border: none !important;
-			border-radius: 50% !important;
-			box-shadow: var(--neptune-glass-shadow) !important;
+		> .pip-icon {
+			background-image: url("../assets/icons/picture-in-picture-open.svg") !important;
+			fill: #fff !important;
 		}
 	}
 
-	> .pip-icon {
-		background-image: url("../assets/icons/picture-in-picture-open.svg") !important;
-		fill: #fff !important;
-	}
-}
+	.controlBar {
+		height: 31px !important;
+		background-color: #00000080 !important;
+		backdrop-filter: saturate(1.5) blur(2em);
+		margin: 6px;
+		border-radius: var(--border-radius-small, 6px);
 
-.controlBar {
-	height: 31px !important;
-	background-color: #00000080 !important;
-	backdrop-filter: saturate(1.5) blur(2em);
-	margin: 6px;
-	border-radius: var(--border-radius-small);
-
-	> .button:enabled:is(:hover, :hover:active) {
-		fill: #fff !important;
-	}
-
-	> .muteButton {
-		background-image: url("../assets/icons/audio.svg") !important;
-
-		&[muted] {
-			background-image: url("../assets/icons/audio-muted.svg") !important;
+		> .button:enabled:is(:hover, :hover:active) {
+			fill: #fff !important;
 		}
 
-		&[noAudio] {
-			background-image: url("../assets/icons/audioNoAudioButton.svg") !important;
+		> .muteButton {
+			background-image: url("../assets/icons/audio.svg") !important;
+
+			&[muted] {
+				background-image: url("../assets/icons/audio-muted.svg") !important;
+			}
+
+			&[noAudio] {
+				background-image: url("../assets/icons/audioNoAudioButton.svg") !important;
+			}
+		}
+
+		> .fullscreenButton {
+			background-image: url("../assets/icons/fullscreenEnterButton.svg") !important;
+
+			&[fullscreened] {
+				background-image: url("../assets/icons/fullscreenExitButton.svg") !important;
+			}
+		}
+
+		.scrubber::-moz-range-thumb {
+			height: 17px !important;
+			width: 4px !important;
+			border-radius: 2px !important;
+		}
+
+		.volumeControl::-moz-range-thumb {
+			height: 14px !important;
+			width: 14px !important;
+		}
+
+		.bufferBar,
+		.volumeControl::-moz-range-track {
+			background-color: #666 !important;
+		}
+
+		.bufferBar::-moz-progress-bar {
+			background-color: #888 !important;
+		}
+
+		.volumeControl::-moz-range-progress,
+		.progressBar::-moz-progress-bar {
+			background-color: #aaa !important;
+		}
+
+		.scrubber:hover::-moz-range-thumb,
+		.volumeControl:hover::-moz-range-thumb {
+			background-color: #fff !important;
 		}
 	}
+}
 
-	> .fullscreenButton {
-		background-image: url("../assets/icons/fullscreenEnterButton.svg") !important;
+@media (prefers-reduced-transparency: reduce) {
+	.videocontrols {
+		.pip-wrapper:not(.experiment) > .pip-small {
+			background-color: #000 !important;
+			backdrop-filter: none;
+			box-shadow: none !important;
+		}
 
-		&[fullscreened] {
-			background-image: url("../assets/icons/fullscreenExitButton.svg") !important;
+		.controlBar {
+			background-color: #000 !important;
+			backdrop-filter: none;
 		}
 	}
 }
 
-.scrubber::-moz-range-thumb {
-	height: 17px !important;
-	width: 4px !important;
-	border-radius: 2px !important;
-}
-
-.volumeControl::-moz-range-thumb {
-	height: 14px !important;
-	width: 14px !important;
-}
-
-.bufferBar,
-.volumeControl::-moz-range-track {
-	background-color: #666 !important;
-}
-
-.bufferBar::-moz-progress-bar {
-	background-color: #888 !important;
-}
-
-.volumeControl::-moz-range-progress,
-.progressBar::-moz-progress-bar {
-	background-color: #aaa !important;
-}
-
-.scrubber:hover::-moz-range-thumb,
-.volumeControl:hover::-moz-range-thumb {
-	background-color: #fff !important;
-}
-
-#eDivResult {
-	background: var(--neptune-secondary-background) !important;
-	backdrop-filter: blur(16px) !important;
-	border: 1px solid var(--neptune-toolbar-border-color) !important;
-	border-radius: 12px !important;
-	box-shadow: var(--neptune-panel-shadow) !important;
+@media (forced-colors: active) {
+	.videocontrols {
+		.pip-wrapper:not(.experiment) > .pip-small,
+		.controlBar {
+			backdrop-filter: none;
+			box-shadow: none !important;
+		}
+	}
 }

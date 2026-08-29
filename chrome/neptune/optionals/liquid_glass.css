@@ -1,0 +1,193 @@
+/* Neptune Liquid Glass
+ * Static frost and short state transitions for Firefox chrome.
+ * No animated filters, JavaScript injection, or persistent GPU layers. */
+
+:root {
+	--nept-glass-tab: light-dark(
+		#ffffff34,
+		#ffffff0e
+	);
+	--nept-glass-tab-hover: light-dark(#ffffff22, #ffffff09);
+	--nept-glass-field: light-dark(#ffffff2e, #ffffff08);
+	--nept-glass-field-hover: light-dark(#ffffff3a, #ffffff0c);
+	--nept-glass-field-focus: light-dark(#ffffff46, #ffffff10);
+	--nept-glass-edge: light-dark(#ffffff4a, #ffffff16);
+	--nept-glass-shadow-color: light-dark(#17202b18, #00000020);
+	--nept-glass-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--nept-glass-fast: 120ms;
+	--nept-glass-medium: 150ms;
+
+	/* Feed Neptune's existing normal-state rules. */
+	--nept-tab-hover-background: var(--nept-glass-tab-hover);
+	--nept-tab-selected-background: var(--nept-glass-tab);
+	--nept-verticaltab-background: transparent;
+	--nept-verticaltab-selected-background: var(--nept-glass-tab);
+	--nept-verticaltab-pinned-background: var(--nept-glass-tab-hover);
+	--nept-urlbar-background: var(--nept-glass-field);
+	--nept-urlbar-hover-background: var(--nept-glass-field-hover);
+	--nept-urlbar-focused-background: var(--nept-glass-field-focus);
+
+	/* Feed the active macOS Tahoe toolbar option. */
+	--opt-tahoe-theme-toolbar-item-background: var(--nept-glass-field);
+	--opt-tahoe-theme-toolbar-item-hover-background: var(--nept-glass-field-hover);
+	--opt-tahoe-theme-toolbar-item-focused-background: var(--nept-glass-field-focus);
+}
+
+/* Address field: Tahoe retains its restrained depth shadow without extra sheen. */
+.urlbar > .urlbar-background {
+	background-image: none !important;
+}
+
+.urlbar:is([focused], [open]) > .urlbar-background {
+	background-image: none !important;
+}
+
+@media not -moz-pref("sidebar.verticalTabs") {
+	/* Keep the full-width rail invisible; individual tab pills carry state. */
+	#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox {
+		background-color: transparent !important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
+
+	#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab > .tab-stack > .tab-background {
+		transition:
+			background-color var(--nept-glass-fast) ease-out,
+			box-shadow var(--nept-glass-medium) var(--nept-glass-ease) !important;
+	}
+
+	:root[customizing] #tabbrowser-tabs[orient="horizontal"] .tab-background,
+	#tabbrowser-tabs[orient="horizontal"][movingtab] .tab-background,
+	#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab[dragtarget] > .tab-stack > .tab-background {
+		transition: none !important;
+		transform: none !important;
+	}
+
+	/* A quiet selected capsule: one fill, one edge, and one short shadow. */
+	#navigator-toolbox #TabsToolbar #tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:is([selected], [visuallyselected]):not([usercontextid], tab-group .tabbrowser-tab) > .tab-stack > .tab-background {
+		background-color: var(--nept-glass-tab) !important;
+		background-image: none !important;
+		box-shadow:
+			inset 0 1px 0 var(--nept-glass-edge),
+			0 1px 3px var(--nept-glass-shadow-color) !important;
+	}
+
+	/* Neptune suppresses the default outline, so restore a keyboard cue. */
+	#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:focus-visible > .tab-stack > .tab-background {
+		outline: 2px solid AccentColor !important;
+		outline-offset: -2px !important;
+	}
+
+	:root:-moz-window-inactive #tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:is([selected], [visuallyselected]):not([usercontextid], tab-group .tabbrowser-tab) > .tab-stack > .tab-background {
+		box-shadow: inset 0 1px 0 light-dark(#ffffff28, #ffffff10) !important;
+		transform: none;
+	}
+
+	/* The transparent-start-page option uses direct important colors. */
+	#navigator-toolbox:has(tab:not(tab-split-view-wrapper > tab)[image^="chrome://"][selected]:is([label="New Tab"], [label="New Private Tab"])) #urlbar-container > .urlbar:not([open]) > .urlbar-background {
+		background-color: var(--nept-glass-field) !important;
+	}
+
+	#navigator-toolbox:has(tab:not(tab-split-view-wrapper > tab)[image^="chrome://"][selected]:is([label="New Tab"], [label="New Private Tab"])) #urlbar-container > .urlbar:not([open]):hover > .urlbar-background {
+		background-color: var(--nept-glass-field-hover) !important;
+	}
+
+	#navigator-toolbox:has(tab:not(tab-split-view-wrapper > tab)[image^="chrome://"][selected]:is([label="New Tab"], [label="New Private Tab"])) #urlbar-container > .urlbar[focused]:not([open]) > .urlbar-background {
+		background-color: var(--nept-glass-field-focus) !important;
+	}
+}
+
+@media -moz-pref("sidebar.verticalTabs") {
+	/* The sidebar is a clear rail; tab capsules alone communicate state. */
+	#vertical-tabs,
+	#tabbrowser-tabs[orient="vertical"],
+	#tabbrowser-tabs[orient="vertical"] > #tabbrowser-arrowscrollbox {
+		background-color: transparent !important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
+
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab > .tab-stack > .tab-background {
+		transition:
+			background-color var(--nept-glass-fast) ease-out,
+			box-shadow var(--nept-glass-medium) var(--nept-glass-ease) !important;
+	}
+
+	:root[customizing] #vertical-tabs #tabbrowser-tabs[orient="vertical"] .tab-background,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"][movingtab] .tab-background,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab[dragtarget] > .tab-stack > .tab-background {
+		transition: none !important;
+		transform: none !important;
+	}
+
+	/* Keep the highlight expensive and quiet: one edge and one short shadow. */
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:is([selected], [visuallyselected]):not([multiselected], [dragtarget], [usercontextid], tab-group .tabbrowser-tab) > .tab-stack > .tab-background {
+		background-image: none !important;
+		box-shadow:
+			inset 0 1px 0 var(--nept-glass-edge),
+			0 1px 3px var(--nept-glass-shadow-color) !important;
+	}
+
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] > #pinned-tabs-container > .tabbrowser-tab:not([selected], [visuallyselected], [usercontextid], [muted], [soundplaying], [activemedia-blocked]):hover > .tab-stack > .tab-background {
+		background-color: var(--nept-glass-tab-hover) !important;
+	}
+
+	/* Neptune suppresses the default outline, so restore a keyboard cue. */
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:focus-visible > .tab-stack > .tab-background {
+		outline: 2px solid AccentColor !important;
+		outline-offset: -2px !important;
+	}
+
+	:root:-moz-window-inactive #vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:is([selected], [visuallyselected]):not([usercontextid], tab-group .tabbrowser-tab) > .tab-stack > .tab-background {
+		box-shadow: inset 0 1px 0 light-dark(#ffffff28, #ffffff10) !important;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tab-background {
+		animation: none !important;
+		transition: none !important;
+		transform: none !important;
+	}
+
+	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tab-content {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	:root {
+		--nept-glass-tab: light-dark(#ffffff, #343840);
+		--nept-glass-tab-hover: light-dark(#f7f8fa, #30343b);
+		--nept-glass-field: light-dark(#ffffff, #2b2f36);
+		--nept-glass-field-hover: light-dark(#f7f8fa, #32363d);
+		--nept-glass-field-focus: light-dark(#ffffff, #383c44);
+	}
+
+	.urlbar > .urlbar-background,
+	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) > #tabbrowser-arrowscrollbox,
+	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tab-background,
+	#vertical-tabs {
+		backdrop-filter: none !important;
+	}
+}
+
+@media (forced-colors: active) {
+	.urlbar > .urlbar-background,
+	#tabbrowser-tabs[orient="horizontal"] > #tabbrowser-arrowscrollbox,
+	#tabbrowser-tabs[orient="horizontal"] .tab-background,
+	#vertical-tabs,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"],
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tab-background {
+		background-image: none !important;
+		box-shadow: none !important;
+	}
+
+	#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:is([selected], [visuallyselected], :focus-visible) > .tab-stack > .tab-background,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:is([selected], [visuallyselected], :focus-visible) > .tab-stack > .tab-background {
+		outline: 2px solid Highlight !important;
+		outline-offset: -2px !important;
+	}
+}

@@ -1,38 +1,66 @@
-<h1 align="center"><strong>Neptune Firefox</strong></h1>
+<h1 align="center"><strong>Lucid Foxgate</strong></h1>
 
-This is a personal edit of the creators theme, not my theme but my twist.
-I Love the look and layout but have enabled some glass effects, will update as I come up with tweaks.
+<p align="center">A restrained, adaptive glass interface for Firefox, evolved from Neptune Firefox.</p>
 
-**Instructions:** 
-- This theme is compatible with the latest release of Firefox and works on both Windows and macOS.
-- To enable adaptive colors, you need to install the **[Adaptive Tab Bar Color](https://addons.mozilla.org/firefox/addon/adaptive-tab-bar-colour)** extension. If not, the tabs will appear transparent.
+Lucid Foxgate refines Firefox with quiet depth, rounded geometry, adaptive color, and short compositor-friendly transitions. The design favors legibility and responsiveness over exaggerated effects: the glass layer is mostly static CSS, with no injected JavaScript or persistent animated filters.
 
-<img src="info/preview.png" alt="Preview Image" width="800px">
+<img src="info/preview.png" alt="Lucid Foxgate preview" width="800px">
+
+## Recommended experience
+
+- **Windows 11 Mica:** Recommended for the best native popup composition. Lucid Foxgate also includes a visually consistent non-Mica fallback.
+- **[Adaptive Tab Bar Colour](https://addons.mozilla.org/firefox/addon/adaptive-tab-bar-colour/):** Recommended for Safari-like toolbar tinting that follows the active website. The theme consumes Firefox's standard `--lwt-accent-color` variable, so the extension remains optional.
+- **Current Firefox release:** Custom Firefox CSS can change between browser releases, so keep Firefox and the theme together when updating.
 
 ## Installation
 
-- Download the theme file and unzip the `chrome` folder into your `profile` folder.
-- You can modify the wallpaper in the `userContent.css`, and edit the file names for the light and dark modes
+1. Open `about:support` in Firefox and select **Open Folder** beside **Profile Folder**.
+2. Close Firefox.
+3. Copy this repository's `chrome` folder into the Firefox profile folder. Replace the previous theme files when upgrading.
+4. Open `about:config` and set:
+   - `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+   - `svg.context-properties.content.enabled` to `true`.
+   - `widget.non-native-theme.use-theme-accent` to `true`.
+5. Restart Firefox.
 
-```css
-body {
-	background: url("neptune/image/RainbowLight.png") center/cover no-repeat fixed;
-
-	@media (prefers-color-scheme: dark) {
-		background: url("neptune/image/RainbowDark.png") center/cover no-repeat fixed;
-	}
-}
-```
+If Adaptive Tab Bar Colour is installed, set its Theme Builder color controls to `0%` so Lucid Foxgate can supply the glass and contrast layers without competing tints.
 
 ## Configuration
 
-- **about:config**
-    - Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
-    - Set `svg.context-properties.content.enabled` to `true`.
-    - Set `widget.non-native-theme.use-theme-accent` to `true`.
+The active optional modules are declared near the top of `chrome/userChrome.css` and `chrome/userContent.css`.
 
-- **Required settings**
-    - Move all toolbar buttons to the top, and the tab bar does not display any buttons.
-    - If extension (Adaptive Tab Bar Color) is enabled, set all colors in the Options (theme builder) to `0%`.
+- Lucid Foxgate ships with macOS-style traffic-light controls enabled. To use native Windows controls, comment out `macos_controls.css` and enable `windows_native_controls.css` instead.
+- `macos_tahoe_theme_toolbar.css` provides the compact floating toolbar treatment.
+- `liquid_glass.css` provides the restrained tab and address-field glass states.
+- The transparent New Tab toolbox requires both `Toolbox_transparent_startpage.css` in `userChrome.css` and `Startpage_for_transparent_toolbox.css` in `userContent.css`.
+- New Tab and Private Browsing wallpapers can be changed in `chrome/userContent.css`.
 
-ENJOY!
+## Changelog
+
+### Lucid Foxgate — 2026-08-28
+
+- Renamed the customized Neptune build to **Lucid Foxgate**.
+- Added a low-overhead Liquid Glass layer for the address field, horizontal tabs, vertical tabs, and pinned tabs.
+- Added short state transitions with reduced-motion handling and disabled motion during tab dragging or toolbar customization.
+- Added Mica-aware Windows popup composition plus a matching non-Mica fallback with unified corner radius, border, spacing, and shadow geometry.
+- Restored subtle popup blur while preserving solid reduced-transparency and forced-colors fallbacks.
+- Rebuilt the URLbar results popup as one continuous rounded, blurred surface over both websites and internal Firefox pages.
+- Corrected URLbar suggestion/history overlap, hover contrast, result spacing, and the overly prominent Windows accent frame.
+- Reduced tab and address-field highlights for a quieter, more premium appearance.
+- Added a Safari-like separation between the address bar, browser frame, and horizontal tab row.
+- Capped horizontal tabs at a Firefox-like `225px` and hid empty or single-tab rails without suppressing pinned tabs.
+- Added glass styling for the vertical tabs interface while keeping invisible rails free of unnecessary filters.
+- Preserved semantic Firefox Container and tab-group colors across selected, hover, pinned, and drag states.
+- Expanded keyboard focus, reduced-motion, reduced-transparency, and forced-colors coverage throughout the browser chrome.
+- Scoped Firefox content styling to internal pages so theme rules do not leak into ordinary websites.
+- Updated New Tab, Reader View, PDF, dialog, sidebar, button, and media-player styling.
+- Removed obsolete backup CSS, duplicate color files, legacy titlebar overrides, and unused Windows control assets from the release tree.
+- Added updated wallpapers, service-card icons, trust-state icons, translation assets, and tab-note assets.
+
+## Roadmap
+
+- Upcoming implementations and compatibility work will be added for **Nova UI**.
+
+## Credits
+
+Lucid Foxgate is a personal evolution of the Neptune Firefox theme. The project remains available under the included MIT License.
