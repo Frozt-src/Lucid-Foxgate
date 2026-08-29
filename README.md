@@ -37,7 +37,7 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 
 ## Changelog
 
-### Lucid Foxgate — 2026-08-28
+### Lucid Foxgate - 2026-08-28
 
 - Added a low-overhead Liquid Glass layer for the address field, horizontal tabs, vertical tabs, and pinned tabs.
 - Added short state transitions with reduced-motion handling and disabled motion during tab dragging or toolbar customization.
