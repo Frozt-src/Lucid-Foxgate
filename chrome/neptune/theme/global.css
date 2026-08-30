@@ -38,14 +38,14 @@
 	--urlbar-icon-padding: calc((var(--size-item-medium) - 2px - 2px - 16px ) / 2) !important;
 	--urlbar-searchmodeswitcher-inline-padding: var(--urlbar-icon-padding) !important;
 	--tab-min-height: var(--size-item-medium) !important;
-	--tabstrip-min-height: calc(var(--tab-min-height) + var(--tab-block-margin)) !important;
+	--tabstrip-min-height: calc(var(--tab-min-height) + var(--tab-margin-block)) !important;
 	--tab-border-radius: var(--border-radius-xlarge) !important;
 	--tab-group-label-height: var(--tab-min-height) !important;
 	--tab-group-label-highlight-thickness: var(--tab-group-line-thickness) !important;
-	--tab-height-with-margin-padding: calc(var(--tab-min-height) + 3 * var(--tab-block-margin)) !important;
+	--tab-height-with-margin-padding: calc(var(--tab-min-height) + 3 * var(--tab-margin-block)) !important;
 	--tab-label-line-height: 1.6 !important;
-	--tab-selected-shadow: var(--shadow-inner-glow) var(--lwt-accent-color), var(--shadow-inner-depth) var(--lwt-accent-color), 0 0 0 2px var(--nept-tab-shadow-color) !important;
-	--button-min-height: calc(var(--size-item-small) + var(--toolbarbutton-inner-padding)) !important;
+	--tab-box-shadow-selected: var(--shadow-inner-glow) var(--lwt-accent-color), var(--shadow-inner-depth) var(--lwt-accent-color), 0 0 0 2px var(--nept-tab-shadow-color) !important;
+	--button-min-height: calc(var(--size-item-small) + var(--toolbarbutton-padding-inner)) !important;
 	--button-padding: 0 var(--space-large) !important;
 	--menu-panel-width-wide: 28em !important;
 	--uei-icon-size: var(--panel-and-palette-icon-size) !important;
@@ -61,7 +61,7 @@
 	--arrowpanel-padding: calc(var(--arrowpanel-menuitem-margin-inline) + var(--arrowpanel-menuitem-padding-inline)) !important;
 	--tabpanel-background-color: transparent !important;
 	--in-content-clip-path: inset(0 round 0.01px 0 0);
-	--toolbarbutton-inner-padding: calc((var(--urlbar-min-height) - var(--size-item-small)) / 2) !important;
+	--toolbarbutton-padding-inner: calc((var(--urlbar-min-height) - var(--size-item-small)) / 2) !important;
 	--toolbarbutton-icon-fill: color-mix(in srgb, currentColor 70%, transparent) !important;
 	--background-color-canvas: var(--nept-secondary-background) !important;
 	--button-background-color-primary: var(--color-accent-primary) !important;

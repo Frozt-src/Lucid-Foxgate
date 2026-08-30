@@ -8,7 +8,7 @@
 
 	#nav-bar {
 		background-color: transparent !important;
-		padding: var(--nept-browser-toolbox-padding) 0 var(--nept-browser-toolbox-padding) calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+		padding: var(--nept-browser-toolbox-padding) 0 var(--nept-browser-toolbox-padding) calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
 		border: none !important;
 
 		:root[inFullscreen] & {
@@ -21,7 +21,7 @@
 
 		@media not -moz-pref("sidebar.verticalTabs") {
 			:root[privatebrowsingmode="temporary"] & {
-				padding-inline-start: calc(var(--window-controls-size) + var(--size-item-large) + 2 * var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+				padding-inline-start: calc(var(--window-controls-size) + var(--size-item-large) + 2 * var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
 			}
 		}
 
@@ -82,7 +82,7 @@
 		min-width: unset !important;
 
 		@media not -moz-pref("sidebar.verticalTabs") {
-			--toolbarbutton-inner-padding: inherit !important;
+			--toolbarbutton-padding-inner: inherit !important;
 			order: 1;
 
 			> .titlebar-spacer {
@@ -97,7 +97,7 @@
 	}
 
 	#PersonalToolbar {
-		--toolbarbutton-inner-padding: var(--toolbarbutton-outer-padding) !important;
+		--toolbarbutton-padding-inner: var(--toolbarbutton-padding-outer) !important;
 		background-color: transparent !important;
 		outline-color: var(--border-color-deemphasized) !important;
 		transition-duration: 300ms !important;
@@ -232,7 +232,7 @@
 
 					> toolbarbutton {
 						appearance: none !important;
-						padding: var(--toolbarbutton-outer-padding) !important;
+						padding: var(--toolbarbutton-padding-outer) !important;
 
 						&:where(:hover) {
 							color: var(--color-accent-primary-hover) !important;
@@ -320,7 +320,7 @@ findbar {
 
 		.findbar-find-next,
 		.findbar-find-previous {
-			padding: 0 var(--toolbarbutton-outer-padding) !important;
+			padding: 0 var(--toolbarbutton-padding-outer) !important;
 			border: 1px solid var(--border-color-deemphasized);
 		}
 
@@ -343,7 +343,7 @@ findbar {
 
 	> .findbar-closebutton {
 		width: 42px !important;
-		padding: 0 var(--toolbarbutton-outer-padding) !important;
+		padding: 0 var(--toolbarbutton-padding-outer) !important;
 		margin-block: auto !important;
 		list-style-image: url("../assets/icons/done.svg") !important;
 		border: var(--border-width) solid var(--border-color-deemphasized);

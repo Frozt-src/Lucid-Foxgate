@@ -1,7 +1,7 @@
 /*---------- Icons ----------*/
 #PanelUI-menu-button {
 	list-style-image: url("../assets/icons/menu.svg") !important;
-	margin-inline-end: calc(var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+	margin-inline-end: calc(var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
 
 	&:is([badge-status^="update-"], [badge-status="addon-alert"], [badge-status="fxa-needs-authentication"]) {
 		list-style-image: url("../assets/icons/menu-badged.svg") !important;
@@ -328,17 +328,17 @@ treechildren::-moz-tree-image(query, OrganizerQuery_tags_______v) {
 }
 
 .private-browsing-indicator-with-label {
-	--toolbarbutton-inner-padding: calc((var(--urlbar-min-height) - var(--size-item-small)) / 2) !important;
+	--toolbarbutton-padding-inner: calc((var(--urlbar-min-height) - var(--size-item-small)) / 2) !important;
 
 	#TabsToolbar > & {
 		position: fixed;
-		inset-block-start: calc(var(--nept-browser-toolbox-padding) + var(--toolbarbutton-inner-padding));
-		inset-inline-start: calc(76px + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
-		margin-inline: calc(var(--toolbarbutton-inner-padding) + var(--toolbar-start-end-padding) / 2) !important;
+		inset-block-start: calc(var(--nept-browser-toolbox-padding) + var(--toolbarbutton-padding-inner));
+		inset-inline-start: calc(76px + var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
+		margin-inline: calc(var(--toolbarbutton-padding-inner) + var(--toolbar-start-end-padding) / 2) !important;
 	}
 
 	#navigator-toolbox[tabs-hidden] #nav-bar > & {
-		margin-inline: calc(var(--toolbarbutton-inner-padding) - var(--toolbarbutton-outer-padding)) calc(var(--toolbarbutton-inner-padding) + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+		margin-inline: calc(var(--toolbarbutton-padding-inner) - var(--toolbarbutton-padding-outer)) calc(var(--toolbarbutton-padding-inner) + var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
 	}
 
 	> .private-browsing-indicator-icon {

@@ -73,7 +73,7 @@
 	@media not -moz-pref("sidebar.verticalTabs") {
 		#PanelUI-menu-button {
 			:root:not([inFullscreen]) & {
-				margin-inline-end: calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-outer-padding)) !important;
+				margin-inline-end: calc(var(--window-controls-size) + var(--toolbar-start-end-padding) + var(--toolbarbutton-padding-outer)) !important;
 			}
 		}
 

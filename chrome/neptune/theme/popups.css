@@ -189,30 +189,20 @@ panel {
 	}
 
 	&[type="autocomplete-richlistbox"] {
-		--panel-background: var(--arrowpanel-background) !important;
+		--panel-background-color: var(--arrowpanel-background) !important;
+		--button-background-color-hover: var(--button-background-color-primary-hover) !important;
+		--button-background-color-active: var(--button-background-color-primary-active) !important;
+		--button-text-color-hover: var(--button-text-color-primary) !important;
+		--button-text-color-active: var(--button-text-color-primary) !important;
+		--border-radius-large: var(--dimension-8) !important;
 
-		> .autocomplete-richlistbox {
+		> richlistbox {
 			background-color: transparent !important;
+			padding: var(--panel-padding-block) !important;
 
-			> .autocomplete-richlistitem {
-				&:not([disabled="true"]):not([selected]):hover {
-					background-color: var(--color-accent-primary-hover) !important;
-					color: var(--button-text-color-primary) !important;
-				}
-
-				&[selected] {
-					background-color: var(--color-accent-primary-active) !important;
-					color: var(--button-text-color-primary) !important;
-				}
-
-				> .ac-type-icon {
-					min-height: var(--size-item-xsmall) !important;
-					min-width: var(--size-item-xsmall) !important;
-				}
-
-				> .ac-title {
-					margin-inline: auto !important;
-				}
+			> richlistitem.autocomplete-row-item > autocomplete-row-item {
+				background-color: transparent !important;
+				border: none !important;
 			}
 		}
 
@@ -316,7 +306,7 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 			}
 
 			> :is(menucaption, menuitem) {
-				padding-block: var(--toolbarbutton-outer-padding) !important;
+				padding-block: var(--toolbarbutton-padding-outer) !important;
 
 				> .menu-text {
 					padding-block: var(--space-xsmall) !important;

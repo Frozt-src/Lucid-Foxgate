@@ -21,6 +21,7 @@ Lucid Foxgate refines Firefox with quiet depth, rounded geometry, adaptive color
    - `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
    - `svg.context-properties.content.enabled` to `true`.
    - `widget.non-native-theme.use-theme-accent` to `true`.
+   - On Windows 11, optionally set `widget.windows.uwp-system-colors.highlight-accent` to `true` for closer Mica accent integration.
 5. Restart Firefox.
 
 If Adaptive Tab Bar Colour is installed, set its Theme Builder color controls to `0%` so Lucid Foxgate can supply the glass and contrast layers without competing tints.
@@ -37,12 +38,21 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 
 ## Changelog
 
+### Lucid Foxgate 1.3b - 2026-08-30
+
+- Updated renamed Firefox 154 tab, toolbar-button, and URLbar design tokens while preserving Lucid Foxgate's established dimensions and color values.
+- Updated URL-result action menus and native autocomplete selectors for Firefox 154's current accessibility state and popup structure.
+- Ported current split-view clipping and overflowing-tab label behavior without changing the theme's compact tab geometry.
+- Added restrained `scale3d` menu motion, multiselect breathing feedback, and reduced-motion fallbacks.
+- Added Nova New Tab panel-list glass styling with reduced-transparency and forced-colors fallbacks.
+- Corrected two malformed media-player shadow colors that could cause Firefox to discard the affected filter declarations.
+- Verified the complete CSS import and asset graph, checked path casing and import cycles, and passed a Firefox-aware Stylelint validation across all theme stylesheets.
+
 ### Lucid Foxgate - 2026-08-28
 
 - Added a low-overhead Liquid Glass layer for the address field, horizontal tabs, vertical tabs, and pinned tabs.
 - Added short state transitions with reduced-motion handling and disabled motion during tab dragging or toolbar customization.
-- Added Mica-aware Windows popup composition plus a matching non-Mica fallback with unified corner radius, border, spacing, and shadow geometry.
-  subtle popup blur while preserving solid reduced-transparency and forced-colors fallbacks.
+- Added Mica-aware Windows popup composition plus a matching non-Mica fallback with unified corner radius, border, spacing, shadow geometry, and subtle popup blur while preserving solid reduced-transparency and forced-colors fallbacks.
 - Rebuilt the URLbar results popup as one continuous rounded, blurred surface over both websites and internal Firefox pages.
 - Corrected URLbar suggestion/history overlap, hover contrast, result spacing, and the overly prominent Windows accent frame.
 - Reduced tab and address-field highlights for a quieter, more premium appearance.

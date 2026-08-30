@@ -78,14 +78,14 @@
 				--button-outer-padding-inline: calc(((var(--tab-min-height) + 2 * var(--space-medium)) - var(--urlbar-min-height)) / 2) !important;
 
 				&:last-of-type {
-					--button-outer-padding-block-end: calc(var(--toolbarbutton-inner-padding) / 2) !important;
+					--button-outer-padding-block-end: calc(var(--toolbarbutton-padding-inner) / 2) !important;
 				}
 			}
 		}
 
 		@media -moz-pref("sidebar.verticalTabs") {
 			> moz-button:not(.tools-overflow, .expanded-button) {
-				--button-outer-padding-block: calc(var(--toolbarbutton-inner-padding) / 2) !important;
+				--button-outer-padding-block: calc(var(--toolbarbutton-padding-inner) / 2) !important;
 			}
 		}
 
