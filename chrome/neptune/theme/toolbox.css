@@ -271,7 +271,7 @@ findbar {
 	background-color: transparent !important;
 	border: none !important;
 	padding-block: 0 var(--space-xsmall) !important;
-	order: -1;
+	min-height: unset !important;
 
 	@media (-moz-platform: macos) {
 		flex-direction: row-reverse;

@@ -98,7 +98,7 @@
 			inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-tabsToolbar-height) + var(--opt-theme-bookmarksbar-height));
 		}
 
-		+ #browser > #sidebar-main:not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container:not([hidden]) ~ #tabbrowser-tabbox findbar {
 			width: calc(100% - var(--opt-theme-sidebar-collapsed-width));
 			inset-inline-start: var(--opt-theme-sidebar-collapsed-width);
 		}
@@ -113,7 +113,7 @@
 			inset-inline-start: calc(var(--opt-theme-sidebar-chat-box-width) + var(--opt-theme-sidebar-collapsed-width));
 		}
 
-		+ #browser > :is(#sidebar-main, #sidebar-box) {
+		+ #browser > :is(#sidebar-container, #sidebar-box) {
 			position: absolute !important;
 			inset-block-start: calc(var(--opt-theme-tabsToolbar-height) + var(--opt-theme-toolbox-height));
 			height: calc(100% - (var(--opt-theme-tabsToolbar-height) + var(--opt-theme-toolbox-height)));
@@ -124,8 +124,8 @@
 			}
 		}
 
-		+ #browser > #sidebar-main {
-			z-index: var(--browser-stack-z-index-rdm-toolbar);
+		+ #browser > #sidebar-container {
+			z-index: 4;
 
 			&[sidebar-positionend] {
 				inset-inline-end: 0;
@@ -158,7 +158,7 @@
 			}
 		}
 
-		&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-main, #sidebar-box) {
+		&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-container, #sidebar-box) {
 			inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-tabsToolbar-height) + var(--opt-theme-bookmarksbar-height));
 			height: calc(100% - (var(--opt-theme-toolbox-height) + var(--opt-theme-tabsToolbar-height) + var(--opt-theme-bookmarksbar-height)));
 		}
@@ -173,12 +173,12 @@
 				inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height));
 			}
 
-			+ #browser > :is(#sidebar-main, #sidebar-box) {
+			+ #browser > :is(#sidebar-container, #sidebar-box) {
 				inset-block-start: var(--opt-theme-toolbox-height);
 				height: calc(100% - var(--opt-theme-toolbox-height));
 			}
 
-			&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-main, #sidebar-box) {
+			&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-container, #sidebar-box) {
 				inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height));
 				height: calc(100% - (var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height)));
 			}
@@ -189,7 +189,7 @@
 		}
 
 		@media (prefers-reduced-motion: reduce) {
-			+ #browser > :is(#sidebar-main, #sidebar-box) {
+			+ #browser > :is(#sidebar-container, #sidebar-box) {
 				transition: none !important;
 			}
 		}
@@ -273,12 +273,12 @@
 			inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height));
 		}
 
-		+ #browser > #sidebar-main:not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container:not([hidden]) ~ #tabbrowser-tabbox findbar {
 			width: calc(100% - var(--opt-theme-sidebar-collapsed-width));
 			inset-inline-start: var(--opt-theme-sidebar-collapsed-width);
 		}
 
-		+ #browser > #sidebar-main[sidebar-launcher-expanded]:not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container[sidebar-launcher-expanded]:not([hidden]) ~ #tabbrowser-tabbox findbar {
 			width: calc(100% - var(--opt-theme-sidebar-width));
 			inset-inline-start: var(--opt-theme-sidebar-width);
 		}
@@ -288,7 +288,7 @@
 			inset-inline-start: calc(var(--opt-theme-sidebar-box-width) + var(--opt-theme-sidebar-collapsed-width));
 		}
 
-		+ #browser > #sidebar-main[sidebar-launcher-expanded]:not([hidden]) ~ #sidebar-box:not([sidebarcommand="viewGenaiChatSidebar"]):not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container[sidebar-launcher-expanded]:not([hidden]) ~ #sidebar-box:not([sidebarcommand="viewGenaiChatSidebar"]):not([hidden]) ~ #tabbrowser-tabbox findbar {
 			width: calc(100% - (var(--opt-theme-sidebar-width) + var(--opt-theme-sidebar-box-width)));
 			inset-inline-start: calc(var(--opt-theme-sidebar-width) + var(--opt-theme-sidebar-box-width));
 		}
@@ -298,16 +298,16 @@
 			inset-inline-start: calc(var(--opt-theme-sidebar-chat-box-width) + var(--opt-theme-sidebar-collapsed-width));
 		}
 
-		+ #browser > #sidebar-main[sidebar-launcher-expanded]:not([hidden]) ~ #sidebar-box[sidebarcommand="viewGenaiChatSidebar"]:not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container[sidebar-launcher-expanded]:not([hidden]) ~ #sidebar-box[sidebarcommand="viewGenaiChatSidebar"]:not([hidden]) ~ #tabbrowser-tabbox findbar {
 			width: calc(100% - (var(--opt-theme-sidebar-chat-box-width) + var(--opt-theme-sidebar-width)));
 			inset-inline-start: calc(var(--opt-theme-sidebar-chat-box-width) + var(--opt-theme-sidebar-width));
 		}
 
-		+ #browser > #sidebar-main[sidebar-launcher-expanded][sidebar-positionend]:not([hidden]) ~ #sidebar-box[sidebar-positionend]:not([hidden]) ~ #tabbrowser-tabbox findbar {
+		+ #browser > #sidebar-container[sidebar-launcher-expanded][sidebar-positionend]:not([hidden]) ~ #sidebar-box[sidebar-positionend]:not([hidden]) ~ #tabbrowser-tabbox findbar {
 			inset-inline-start: 0;
 		}
 
-		+ #browser > :is(#sidebar-main, #sidebar-box) {
+		+ #browser > :is(#sidebar-container, #sidebar-box) {
 			position: absolute !important;
 			inset-block-start: var(--opt-theme-toolbox-height) !important;
 			height: calc(100% - var(--opt-theme-toolbox-height));
@@ -318,13 +318,13 @@
 			}
 		}
 
-		&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-main, #sidebar-box) {
+		&:has(#PersonalToolbar:not([collapsed])) + #browser > :is(#sidebar-container, #sidebar-box) {
 			inset-block-start: calc(var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height)) !important;
 			height: calc(100% - (var(--opt-theme-toolbox-height) + var(--opt-theme-bookmarksbar-height)));
 		}
 
-		+ #browser > #sidebar-main {
-			z-index: var(--browser-stack-z-index-rdm-toolbar);
+		+ #browser > #sidebar-container {
+			z-index: 4;
 
 			:root[sidebar-expand-on-hover] & {
 				background: none !important;
@@ -404,7 +404,7 @@
 		}
 
 		@media (prefers-reduced-motion: reduce) {
-			+ #browser > :is(#sidebar-main, #sidebar-box) {
+			+ #browser > :is(#sidebar-container, #sidebar-box) {
 				transition: none !important;
 			}
 		}

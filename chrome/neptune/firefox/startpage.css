@@ -82,8 +82,8 @@
 }
 
 @-moz-document url("about:home"), url("about:newtab"), url("about:welcome") {
-	* {
-		cursor: auto !important;
+	.nova-enabled .top-sites-list * {
+		cursor: default !important;
 	}
 
 	.collapsible-section {
@@ -260,9 +260,6 @@
 		font-size: var(--font-size-root) !important;
 
 		.edit-topsites-wrapper & {
-			width: 40em !important;
-			top: 25vh !important;
-
 			> .topsite-form .form-wrapper input[type=text] {
 				height: var(--button-min-height) !important;
 				border-radius: var(--border-radius-small) !important;
@@ -276,8 +273,10 @@
 				box-shadow: var(--box-shadow-level-3);
 			}
 
-			> .topsite-form .top-site-outer .top-site-inner > a {
-				padding-block: var(--space-xsmall) !important;
+			> .topsite-form .form-wrapper .field .icon-clear-input {
+				--button-size-icon-small: var(--size-item-small);
+				--button-min-height: var(--size-item-small);
+				--button-border-radius: var(--border-radius-medium);
 			}
 		}
 	}
