@@ -69,13 +69,13 @@
 		--button-border-radius: var(--border-radius-circle) !important;
 
 		@media not -moz-pref("sidebar.verticalTabs") {
-			--button-size-icon: var(--urlbar-min-height) !important;
+			--button-size-icon: var(--urlbar-height) !important;
 
 			/* Keeping the sidebar width consistent between horizontal and vertical layouts ensures smooth layout switching. So its width will be affected by the size of the vertical tabs. */
 			> moz-button:not(.tools-overflow) {
 				--button-outer-padding-block: var(--space-xsmall) !important;
 				--button-outer-padding-block-start: var(--space-xsmall) !important;
-				--button-outer-padding-inline: calc(((var(--tab-min-height) + 2 * var(--space-medium)) - var(--urlbar-min-height)) / 2) !important;
+				--button-outer-padding-inline: calc(((var(--tab-min-height) + 2 * var(--space-medium)) - var(--urlbar-height)) / 2) !important;
 
 				&:last-of-type {
 					--button-outer-padding-block-end: calc(var(--toolbarbutton-padding-inner) / 2) !important;
@@ -102,7 +102,7 @@
 		--button-background-color-ghost-active: var(--button-background-color-primary-active) !important;
 		--button-text-color-ghost-hover: var(--button-text-color-primary) !important;
 		--button-text-color-ghost-active: var(--button-text-color-primary) !important;
-		--button-border-radius: var(--arrowpanel-menuitem-border-radius) !important;
+		--button-border-radius: var(--panel-menuitem-border-radius) !important;
 	}
 
 	#sidebar-tools-and-extensions-splitter {
@@ -166,7 +166,7 @@
 
 	.sidebar-panel {
 		--icon-size: var(--input-icon-size) !important;
-		--panel-separator-color: var(--border-color-card) !important;
+		--panel-separator-color: var(--card-border-color) !important;
 		--button-border-radius: var(--border-radius-small) !important;
 		padding: 0 var(--space-small) !important;
 
@@ -195,7 +195,7 @@
 
 			/* password */
 			> .first-row .search-container {
-				background-color: var(--input-bgcolor) !important;
+				background-color: var(--input-text-background-color) !important;
 				border: none !important;
 
 				 > input[type="search"] {
@@ -206,7 +206,7 @@
 			> .first-row panel-list {
 				background-color: menu !important;
 				backdrop-filter: blur(1em);
-				border-color: var(--border-color-card) !important;
+				border-color: var(--card-border-color) !important;
 				border-radius: var(--border-radius-medium) !important;
 
 				> hr:not([hidden]) {
@@ -285,7 +285,7 @@
 		--button-text-color-ghost-active: var(--button-text-color-primary) !important;
 		--fxview-text-primary-color: var(--button-text-color-primary) !important;
 		height: var(--button-min-height) !important;
-		border-radius: var(--arrowpanel-menuitem-border-radius) !important;
+		border-radius: var(--panel-menuitem-border-radius) !important;
 	}
 
 	.fxview-tab-row-main {
@@ -478,7 +478,7 @@
 }
 
 treechildren::-moz-tree-row {
-	margin-inline: var(--arrowpanel-menuitem-margin-inline);
+	margin-inline: var(--panel-menuitem-margin-inline);
 	border-radius: var(--border-radius-small);
 }
 

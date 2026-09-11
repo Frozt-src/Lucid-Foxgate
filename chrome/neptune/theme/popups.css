@@ -3,7 +3,7 @@ menupopup,
 panel:not(.autoscroller, #feature-callout, #confirmation-hint) {
 	--panel-padding-block: var(--panel-subview-body-padding-block) !important;
 	--panel-separator-color: var(--nept-separator-color) !important;
-	--menuitem-border-radius: var(--arrowpanel-menuitem-border-radius) !important;
+	--menuitem-border-radius: var(--panel-menuitem-border-radius) !important;
 	--menu-arrow-size: var(--size-item-xsmall) !important;
 
 	@media (-moz-platform: macos) {
@@ -97,8 +97,8 @@ panelmultiview[transitioning] > .panel-viewcontainer[panelopen] {
 }
 
 panel {
-	--arrowpanel-header-back-icon-full-width: calc(var(--size-item-xsmall) + 2 * var(--arrowpanel-header-back-icon-padding)) !important;
-	--arrowpanel-header-min-height: calc(var(--arrowpanel-header-back-icon-full-width) + 2 * var(--panel-separator-padding-vertical)) !important;
+	--panel-header-back-icon-full-width: calc(var(--size-item-xsmall) + 2 * var(--panel-header-back-icon-padding)) !important;
+	--panel-header-min-height: calc(var(--panel-header-back-icon-full-width) + 2 * var(--panel-separator-padding-vertical)) !important;
 
 	:root[lwtheme] & {
 		color-scheme: light dark !important;
@@ -123,7 +123,7 @@ panel {
 
 		/*Account menu fix*/
 		.PanelUI-fxa-menu-setup-sync {
-			padding: 0 var(--arrowpanel-menuitem-padding-inline) !important;
+			padding: 0 var(--panel-menuitem-padding-inline) !important;
 
 			> .sync-status-container > :is(.sync-setup-icon, .sync-status-indicator) {
 				width: var(--size-item-small) !important;
@@ -140,15 +140,15 @@ panel {
 		}
 
 		.PanelUI-fxa-menu-section-title {
-			margin: 0 calc(var(--arrowpanel-menuitem-margin-inline) + var(--arrowpanel-menuitem-padding-inline)) !important;
+			margin: 0 calc(var(--panel-menuitem-margin-inline) + var(--panel-menuitem-padding-inline)) !important;
 		}
 
 		:is(#PanelUI-fxa-cta-menu, #PanelUI-fxa-menu-services) .fxa-cta-button {
-			margin: var(--space-xsmall) var(--arrowpanel-menuitem-margin-inline) 0 !important;
+			margin: var(--space-xsmall) var(--panel-menuitem-margin-inline) 0 !important;
 		}
 
 		.panel-footer {
-			margin: var(--space-small) calc(var(--arrowpanel-menuitem-margin-inline) + var(--arrowpanel-menuitem-padding-inline)) var(--space-large) !important;
+			margin: var(--space-small) calc(var(--panel-menuitem-margin-inline) + var(--panel-menuitem-padding-inline)) var(--space-large) !important;
 		}
 
 		#full-page-translations-panel-error {
@@ -185,11 +185,10 @@ panel {
 	}
 
 	toolbarseparator:not(.tab-group-editor-panel toolbarseparator) {
-		--panel-separator-padding: var(--panel-separator-padding-vertical) calc(var(--panel-separator-padding-horizontal) + var(--arrowpanel-menuitem-margin-inline)) !important;
+		--panel-separator-padding: var(--panel-separator-padding-vertical) calc(var(--panel-separator-padding-horizontal) + var(--panel-menuitem-margin-inline)) !important;
 	}
 
 	&[type="autocomplete-richlistbox"] {
-		--panel-background-color: var(--arrowpanel-background) !important;
 		--button-background-color-hover: var(--button-background-color-primary-hover) !important;
 		--button-background-color-active: var(--button-background-color-primary-active) !important;
 		--button-text-color-hover: var(--button-text-color-primary) !important;
@@ -244,7 +243,7 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 		> menu,
 		> menuitem {
 			padding-block: calc((var(--button-min-height) - 18px) / 2) !important;
-			padding-inline-start: var(--arrowpanel-menuitem-padding-inline) !important;
+			padding-inline-start: var(--panel-menuitem-padding-inline) !important;
 
 			.toolbar-menupopup & {
 				padding-block: calc((var(--button-min-height) - 16px) / 2) !important;
@@ -337,8 +336,8 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 }
 
 #confirmation-hint {
-	--arrowpanel-background: var(--color-accent-primary) !important;
-	--arrowpanel-border-color: transparent !important;
+	--panel-background-color: var(--color-accent-primary) !important;
+	--panel-border-color: transparent !important;
 
 	#confirmation-hint-checkmark-animation-container[animate] > #confirmation-hint-checkmark-image {
 		fill: var(--button-text-color-primary) !important;
@@ -351,7 +350,7 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 
 #feature-callout {
 	--arrow-offset: 0 !important;
-	--panel-shadow-margin: var(--arrowpanel-shadow-margin) !important;
+	--panel-shadow-margin: 22px !important;
 
 	.screen[pos=callout] .action-buttons :is(.primary, .secondary) {
 		min-height: var(--button-min-height) !important;
@@ -389,22 +388,22 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 	}
 
 	.PanelUI-remotetabs-clientcontainer > label[itemtype="client"] {
-		margin: 0 calc(var(--arrowpanel-menuitem-margin-inline) + var(--arrowpanel-menuitem-padding-inline)) var(--space-xsmall) !important;
+		margin: 0 calc(var(--panel-menuitem-margin-inline) + var(--panel-menuitem-padding-inline)) var(--space-xsmall) !important;
 	}
 }
 
 .report-broken-site-view {
 	&.main-view a {
-		margin-block: var(--arrowpanel-menuitem-margin-inline) !important;
+		margin-block: var(--panel-menuitem-margin-inline) !important;
 	}
 
 	#report-broken-site-panel-preview-items {
 		background-color: transparent !important;
-		margin: 0 calc(var(--arrowpanel-menuitem-margin-inline) + var(--arrowpanel-menuitem-padding-inline)) !important;
+		margin: 0 calc(var(--panel-menuitem-margin-inline) + var(--panel-menuitem-padding-inline)) !important;
 		border: none !important;
 
 		.data {
-			background: var(--input-bgcolor) !important;
+			background: var(--input-text-background-color) !important;
 			padding: var(--panel-separator-padding) !important;
 			border-radius: var(--border-radius-small);
 		}
@@ -412,8 +411,8 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 		details > summary {
 			background-image: url("chrome://global/skin/icons/arrow-down-12.svg") !important;
 			background-position: left !important;
-			padding: calc((var(--button-min-height) - 16px) / 2) var(--arrowpanel-menuitem-padding-inline) !important;
-			padding-inline-start: calc(var(--icon-size-xsmall) + var(--arrowpanel-menuitem-margin-inline)) !important;
+			padding: calc((var(--button-min-height) - 16px) / 2) var(--panel-menuitem-padding-inline) !important;
+			padding-inline-start: calc(var(--icon-size-xsmall) + var(--panel-menuitem-margin-inline)) !important;
 			border: none !important;
 			border-radius: var(--border-radius-small) !important;
 			cursor: default !important;
@@ -468,10 +467,10 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 }
 
 .unified-extensions-item-menu-button.subviewbutton {
-	padding-inline-end: var(--arrowpanel-menuitem-padding-inline) !important;
+	padding-inline-end: var(--panel-menuitem-padding-inline) !important;
 
 	> .toolbarbutton-icon {
-		padding: var(--arrowpanel-menuitem-margin-inline) !important;
+		padding: var(--panel-menuitem-margin-inline) !important;
 	}
 }
 
@@ -484,7 +483,7 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 	padding-block: var(--panel-subview-body-padding-block) !important;
 
 	#editBMPanel_folderTree {
-		background-color: var(--input-bgcolor) !important;
+		background-color: var(--input-text-background-color) !important;
 		border: none !important;
 	}
 

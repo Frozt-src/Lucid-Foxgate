@@ -22,10 +22,10 @@
 		--button-text-color-primary: white !important;
 		--button-text-color-primary-hover: var(--button-text-color-primary) !important;
 		--focus-outline-color: accentcolor !important;
-		--border-color: var(--border-color-card) !important;
-		--input-text-border-color: var(--border-color-card) !important;
-		--visual-picker-item-border-color: var(--border-color-card) !important;
-		--box-border-color: var(--border-color-card) !important;
+		--border-color: var(--card-border-color) !important;
+		--input-text-border-color: var(--card-border-color) !important;
+		--visual-picker-item-border-color: var(--card-border-color) !important;
+		--box-border-color: var(--card-border-color) !important;
 		--box-icon-size: var(--icon-size-xsmall) !important;
 		--box-padding: var(--space-medium) !important;
 		text-decoration: inherit !important;

@@ -64,7 +64,7 @@
 	--toolbarbutton-hover-background: var(--nept-item-hover-background) !important;
 	--toolbarbutton-active-background: var(--nept-item-active-background) !important;
 	--in-content-border-color: var(--nept-separator-color) !important;
-	--in-content-box-border-color: var(--border-color-card) !important;
+	--in-content-box-border-color: var(--card-border-color) !important;
 	--box-shadow-color-lighter-layer-1: light-dark(#0000000c, #00000019) !important;
 	--box-shadow-color-lighter-layer-2: light-dark(#00000019, #00000026) !important;
 }
@@ -74,7 +74,7 @@
 		--input-width: var(--input-icon-size) !important;
 		--input-height: var(--input-icon-size) !important;
 		--input-margin-block-adjust: calc((1lh - var(--input-height)) / 2) !important;
-		--input-text-background-color: var(--input-bgcolor) !important;
+		--input-text-background-color: var(--nept-input-bgcolor) !important;
 
 		&.with-icon {
 			padding-inline-start: calc(var(--input-text-icon-size) + var(--space-large)) !important;

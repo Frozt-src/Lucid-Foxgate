@@ -1,9 +1,9 @@
 /* This style will partially cover the DevTools on the start page. */
 :root {
-	--opt-theme-toolbox-height: calc(var(--urlbar-min-height) + 2 * var(--nept-browser-toolbox-padding));
+	--opt-theme-toolbox-height: calc(var(--urlbar-height) + 2 * var(--nept-browser-toolbox-padding));
 	--opt-theme-tabsToolbar-height: calc(var(--tab-min-height) + 2 * var(--tab-overflow-clip-margin) + var(--nept-browser-toolbox-padding) / 2);
 	--opt-theme-bookmarksbar-height: calc(var(--size-item-small) + 2 * var(--bookmark-block-padding));
-	--opt-theme-button-outer-padding: calc(((var(--tab-min-height) + 2 * var(--space-medium)) - var(--urlbar-min-height)) / 2);
+	--opt-theme-button-outer-padding: calc(((var(--tab-min-height) + 2 * var(--space-medium)) - var(--urlbar-height)) / 2);
 	--opt-theme-sidebar-collapsed-width: calc(var(--size-item-large) + 2 * var(--opt-theme-button-outer-padding));
 	--opt-theme-sidebar-width: 20em;
 	--opt-theme-sidebar-box-width: 24em;

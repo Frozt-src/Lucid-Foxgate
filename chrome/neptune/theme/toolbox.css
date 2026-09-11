@@ -71,7 +71,7 @@
 	@media (-moz-platform: macos) {
 		.titlebar-buttonbox-container {
 			position: absolute;
-			inset-block-start: calc(var(--nept-browser-toolbox-padding) + (var(--urlbar-min-height) - 16px) / 2);
+			inset-block-start: calc(var(--nept-browser-toolbox-padding) + (var(--urlbar-height) - 16px) / 2);
 			inset-inline-start: var(--space-small);
 		}
 	}
@@ -151,7 +151,7 @@
 	#customization-panelWrapper {
 		> .panel-arrowcontent {
 			border-color: var(--in-content-box-border-color) !important;
-			border-radius: var(--arrowpanel-border-radius) !important;
+			border-radius: var(--panel-border-radius) !important;
 			box-shadow: var(--nept-menu-shadow) !important;
 		}
 

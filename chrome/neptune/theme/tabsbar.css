@@ -1140,7 +1140,7 @@
 
 .tab-group-editor-panel {
 	--panel-padding: var(--space-medium) !important;
-	--panel-separator-padding: var(--arrowpanel-menuitem-margin-inline) !important;
+	--panel-separator-padding: var(--panel-menuitem-margin-inline) !important;
 	--button-border: none !important;
 	--button-min-height-small: var(--button-min-height) !important;
 	--icon-size: var(--size-item-xsmall) !important;
@@ -1157,7 +1157,7 @@
 	.tab-group-editor-name,
 	.tab-group-editor-swatches {
 		padding-block: var(--panel-subview-body-padding-block) !important;
-		padding-inline: var(--arrowpanel-menuitem-margin-inline);
+		padding-inline: var(--panel-menuitem-margin-inline);
 	}
 
 	.tab-group-editor-swatch {
