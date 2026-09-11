@@ -85,7 +85,7 @@
 	--input-text-background-color: var(--nept-input-bgcolor) !important;
 	--background-color-box: var(--input-text-background-color) !important;
 	--focus-outline-color: var(--color-accent-primary) !important;
-	--panel-shadow-margin: 22px !important;
+	--panel-box-shadow-margin: 22px !important;
 	--panel-text-color: FieldText !important;
 	--panel-menuitem-border-radius: var(--border-radius-small) !important;
 	--organizer-toolbar-background: var(--nept-content-background) !important;

@@ -10,7 +10,7 @@ panel:not(.autoscroller, #feature-callout, #confirmation-hint) {
 		appearance: menupopup !important;
 		--panel-background: Menu !important;
 		--panel-border-color: transparent !important;
-		--panel-shadow-margin: 0px !important;
+		--panel-box-shadow-margin: 0px !important;
 	}
 }
 
@@ -350,7 +350,7 @@ toolbarbutton.subviewbutton:not(.all-tabs-secondary-button, .subviewbutton-back,
 
 #feature-callout {
 	--arrow-offset: 0 !important;
-	--panel-shadow-margin: 22px !important;
+	--panel-box-shadow-margin: 22px !important;
 
 	.screen[pos=callout] .action-buttons :is(.primary, .secondary) {
 		min-height: var(--button-min-height) !important;

@@ -43,13 +43,13 @@
 		@media (-moz-platform: macos) or (-moz-platform: windows) {
 			appearance: menupopup !important;
 			--panel-background: Menu !important;
-			--panel-shadow-margin: 0px !important;
+			--panel-box-shadow-margin: 0px !important;
 		}
 
 		@media (-moz-platform: windows) and (not (-moz-windows-mica-popups)) {
 			--panel-border-color: var(--nept-toolbar-border-color) !important;
 			--panel-border-radius: var(--border-radius-small) !important;
-			--panel-shadow-margin: 22px !important;
+			--panel-box-shadow-margin: 22px !important;
 		}
 
 		> menu,

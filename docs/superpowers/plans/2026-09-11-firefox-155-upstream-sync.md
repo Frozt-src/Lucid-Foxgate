@@ -77,7 +77,7 @@ Use `apply_patch` for these exact mappings, retaining Lucid's current values and
 --arrowpanel-menuitem-padding-inline         → --panel-menuitem-padding-inline
 --arrowpanel-menuitem-padding-block          → --panel-menuitem-padding-block
 --arrowpanel-padding                         → --panel-padding
---arrowpanel-shadow-margin                   → --panel-shadow-margin
+--arrowpanel-shadow-margin                   → --panel-box-shadow-margin
 --arrowpanel-menuitem-border-radius          → --panel-menuitem-border-radius
 --arrowpanel-border-radius                   → --panel-border-radius
 --arrowpanel-header-back-icon-full-width     → --panel-header-back-icon-full-width
@@ -87,6 +87,8 @@ Use `apply_patch` for these exact mappings, retaining Lucid's current values and
 --arrowpanel-border-color                    → --panel-border-color
 --arrowpanel-color                           → --panel-text-color
 ```
+
+Also migrate existing `--panel-shadow-margin` declarations to `--panel-box-shadow-margin`: Firefox 155 consumes only the latter. Preserve the existing `22px` root/feature-callout and `0px` macOS popup values, respecting the already-current Windows overrides.
 
 Do not alter unrelated `--panel-*` definitions, popup colors, opacity, backdrop filters, borders, radii, or shadows.
 
