@@ -130,7 +130,6 @@
 			background-color: var(--button-background-color-primary) !important;
 			color: var(--button-text-color-primary)  !important;
 			margin-inline: var(--urlbar-icon-padding) !important;
-			padding-block: var(--urlbar-container-padding) !important;
 			border-radius: var(--border-radius-large) !important;
 
 			&:hover {

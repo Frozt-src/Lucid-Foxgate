@@ -267,6 +267,21 @@
 	}
 }
 
+/* Firefox 155 lays out .browserContainer as a grid and places the findbar row below
+   browserstack, which replaced the flex "order: -1" placement. Keep Lucid's findbar
+   above page content by restating Firefox's own template with only the findbar and
+   browserstack rows swapped. Inert on the flex layout of earlier releases. */
+#tabbrowser-tabpanels .browserContainer {
+	grid-template-areas:
+		"devtools-side-start      devtools-side-start-splitter notificationbox          devtools-side-end-splitter  devtools-side-end"
+		"devtools-side-start      devtools-side-start-splitter rdm-toolbar              devtools-side-end-splitter  devtools-side-end"
+		"devtools-side-start      devtools-side-start-splitter findbar                  devtools-side-end-splitter  devtools-side-end"
+		"devtools-side-start      devtools-side-start-splitter browserstack             devtools-side-end-splitter  devtools-side-end"
+		"devtools-bottom-splitter devtools-bottom-splitter     devtools-bottom-splitter devtools-bottom-splitter    devtools-bottom-splitter"
+		"devtools-bottom          devtools-bottom              devtools-bottom          devtools-bottom             devtools-bottom" !important;
+	grid-template-rows: auto var(--rdm-toolbar-height, 0) auto minmax(var(--content-area-min-size), 1fr) auto auto !important;
+}
+
 findbar {
 	background-color: transparent !important;
 	border: none !important;
@@ -303,7 +318,7 @@ findbar {
 					background-color: var(--button-background-color-hover);
 				}
 
-				checkbox[checked="true"] & {
+				checkbox[checked] & {
 					background-color: var(--button-background-color-primary-active);
 					color: var(--button-text-color-primary);
 				}

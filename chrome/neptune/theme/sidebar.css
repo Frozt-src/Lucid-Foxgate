@@ -410,7 +410,7 @@
 				transition: box-shadow 300ms ease-in-out;
 
 				&:focus-within {
-					box-shadow: var(--box-shadow-popup);
+					box-shadow: var(--popup-box-shadow);
 				}
 			}
 		}
