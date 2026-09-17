@@ -101,10 +101,10 @@ In `macos_tahoe_theme_toolbar.css`, remove only the undefined `--shadow-inner-le
 Run:
 
 ```powershell
-$removed = rg -n --glob '*.css' -- '--urlbar-min-height|--border-color-card|--input-bgcolor|--arrowpanel-(menuitem|padding|shadow|header|border-radius|background|border-color|color)|--shadow-inner-(left|top|right|bottom)' chrome
+$removed = rg -n --glob '*.css' -- '--urlbar-min-height|--border-color-card|--input-bgcolor|--arrowpanel-(menuitem|padding|shadow|header|border-radius|background|border-color|color)|--panel-shadow-margin|--shadow-inner-(left|top|right|bottom)' chrome
 if ($LASTEXITCODE -eq 0) { $removed; exit 1 }
 if ($LASTEXITCODE -gt 1) { exit $LASTEXITCODE }
-rg -n --glob '*.css' -- '--urlbar-height|--card-border-color|--input-text-background-color|--panel-menuitem|--panel-padding|--panel-shadow-margin|--panel-border-radius|--panel-background-color|--panel-border-color|--panel-text-color' chrome
+rg -n --glob '*.css' -- '--urlbar-height|--card-border-color|--input-text-background-color|--panel-menuitem|--panel-padding|--panel-box-shadow-margin|--panel-border-radius|--panel-background-color|--panel-border-color|--panel-text-color' chrome
 git diff --check
 ```
 
