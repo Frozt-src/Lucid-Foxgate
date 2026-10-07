@@ -1,4 +1,20 @@
 /*---------- Tabs Bar ----------*/
+/* Nova retains the palette but omits the legacy pale group tokens still read by
+ * Firefox's group and drag code. Preserve Lucid's pale semantic surfaces. */
+@media -moz-pref("browser.nova.enabled") {
+	:root {
+		--tab-group-blue-pale: var(--color-blue-0);
+		--tab-group-purple-pale: var(--color-purple-0);
+		--tab-group-cyan-pale: var(--color-cyan-0);
+		--tab-group-orange-pale: var(--color-orange-0);
+		--tab-group-yellow-pale: var(--color-yellow-0);
+		--tab-group-pink-pale: var(--color-pink-0);
+		--tab-group-green-pale: var(--color-green-0);
+		--tab-group-red-pale: var(--color-red-0);
+		--tab-group-gray-pale: #f2f9ff;
+	}
+}
+
 #tabbrowser-tabs {
 	padding-inline-start: 0 !important;
 	border-inline-start: none !important;
@@ -384,7 +400,7 @@
 				padding: 0 var(--tab-group-label-padding) !important;
 				margin: 0 auto auto !important;
 				border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
-				box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color)), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color)), var(--box-shadow-card);
+				box-shadow: var(--shadow-inner-glow) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color, transparent)), var(--shadow-inner-depth) color-mix(in oklab, light-dark(var(--tab-group-color), var(--tab-group-color-pale)) 15%, var(--lwt-accent-color, transparent)), var(--card-box-shadow);
 			}
 		}
 

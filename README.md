@@ -38,6 +38,14 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 
 ## Changelog
 
+### Unreleased - Firefox 157 Nova candidate - 2026-10-06
+
+- Retained the completed Firefox 155/156 compatibility work and adapted Firefox 157's separate URLbar results popover to Lucid's existing glass surfaces and solid accessibility fallbacks.
+- Restored Nova tab-group pale colors, current shadow/customization tokens, and autocomplete corner radius.
+- Corrected reduced-motion selector specificity for horizontal and vertical tabs.
+- Passed the complete static import/asset audit, Stylelint, independent branch review, and 35 targeted Firefox 157.0.1 browser checks in a disposable profile.
+- This remains an untagged candidate. Visible remote-page blur, forced-colors rendering, sensitive form panels, and decoded-video/compositor performance still require acceptance. See the [verification report](docs/compatibility/2026-10-06-firefox-157-nova.md) for evidence and limits.
+
 ### Lucid Foxgate 1.3b - 2026-08-30
 
 - Updated renamed Firefox 154 tab, toolbar-button, and URLbar design tokens while preserving Lucid Foxgate's established dimensions and color values.
@@ -67,7 +75,7 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 
 ## Roadmap
 
-- Upcoming implementations and compatibility work will be added for **Nova UI**.
+- Complete the remaining Firefox 157 Nova visual, forced-colors, form-panel, and video/compositor acceptance checks documented in the [candidate report](docs/compatibility/2026-10-06-firefox-157-nova.md).
 
 ## Credits
 

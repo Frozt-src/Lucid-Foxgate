@@ -193,7 +193,7 @@ panel {
 		--button-background-color-active: var(--button-background-color-primary-active) !important;
 		--button-text-color-hover: var(--button-text-color-primary) !important;
 		--button-text-color-active: var(--button-text-color-primary) !important;
-		--border-radius-large: var(--dimension-8) !important;
+		--border-radius-large: 8px !important;
 
 		> richlistbox {
 			background-color: transparent !important;

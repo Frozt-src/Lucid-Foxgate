@@ -288,6 +288,8 @@ git commit -m "fix: update Firefox 155 animation assets"
 
 ### Task 4: Final integration verification
 
+**October 6, 2026 outcome:** completed the integrated static audit and whole-branch review against `2fd3de2`, incorporating the later existing 156 fixes and current stable Firefox 157 Nova adaptations. The [candidate report](../../compatibility/2026-10-06-firefox-157-nova.md) records 35 passing targeted browser checks and explicit unverified acceptance gates. The user's current request authorizes pushing the reviewed candidate branch; the earlier no-automatic-push instruction below describes the original plan. No release/tag or main merge is authorized by this status update.
+
 **Files:**
 - Verify: all files changed by Tasks 1–3
 - Verify: `chrome/userChrome.css`
@@ -298,11 +300,11 @@ git commit -m "fix: update Firefox 155 animation assets"
 - Consumes: the three independently reviewed task commits.
 - Produces: a release candidate that is ready for user-directed deployment or branch integration, with no automatic profile copy, push, release, or main-branch merge.
 
-- [ ] **Step 1: Run the complete compatibility search**
+- [x] **Step 1: Run the complete compatibility search**
 
 Run the removed-name, asset-dimension, import/asset graph, Stylelint, and `git diff --check` validations from Tasks 1–3 against the integrated branch.
 
-- [ ] **Step 2: Verify preserved Lucid invariants**
+- [x] **Step 2: Verify preserved Lucid invariants**
 
 Run exact searches confirming:
 
@@ -315,7 +317,7 @@ rg -n -- 'prefers-reduced-motion|prefers-reduced-transparency|forced-colors' chr
 
 Expected: `liquid_glass.css` remains the final active userChrome import; tab maximum remains 225px; root content/Picture-in-Picture filter suppression remains; accessibility media queries remain present.
 
-- [ ] **Step 3: Inspect branch scope**
+- [x] **Step 3: Inspect branch scope**
 
 Run:
 
@@ -327,10 +329,10 @@ git diff --name-status 2fd3de2..HEAD
 
 Expected: only the specification, plan, explicitly required theme files, two updated notification sprites, and two deleted obsolete sprites appear.
 
-- [ ] **Step 4: Request final whole-branch review**
+- [x] **Step 4: Request final whole-branch review**
 
 Generate a full review package from `2fd3de2` to `HEAD`. The final reviewer must compare the diff against the specification and this plan, triage any deferred minor findings, and explicitly verify both required changes and preserved-behavior exclusions.
 
-- [ ] **Step 5: Report the release candidate**
+- [x] **Step 5: Report the release candidate**
 
 Report commits, fresh verification output, reviewer verdict, all rulings, and any live Browser Toolbox limitation. Do not claim runtime visual verification unless it was directly performed.

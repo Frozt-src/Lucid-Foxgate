@@ -167,7 +167,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tab-background {
+	#tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"]) .tabbrowser-tab > .tab-stack > .tab-background,
+	#vertical-tabs #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab > .tab-stack > .tab-background {
 		animation: none !important;
 		transition: none !important;
 		transform: none !important;

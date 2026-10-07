@@ -146,7 +146,7 @@
 
 #customization-container {
 	background-image: none !important;
-	background-color: var(--toolbox-bgcolor) !important;
+	background-color: var(--toolbox-background-color) !important;
 
 	#customization-panelWrapper {
 		> .panel-arrowcontent {

@@ -166,7 +166,7 @@
 
 /* Keep remote website pixels in the backdrop surface only while the
  * results popover is open; internal Firefox pages do not need this bridge. */
-#navigator-toolbox:has(.urlbar[open]:popover-open) + #browser {
+#navigator-toolbox:has(.urlbar[open]:popover-open, .urlbar[open] > .urlbarView:popover-open) + #browser {
 	backdrop-filter: blur(0) !important;
 }
 
@@ -213,8 +213,45 @@
 	backdrop-filter: saturate(1) blur(3px) !important;
 }
 
+/* Firefox 157 anchors a separate results popover to the input. Keep its native
+ * joint-background clips and paint both halves with Lucid's existing material. */
+#urlbar-container > .urlbar[popover-open] {
+	--urlbar-background-color-focus: var(--nept-secondary-background);
+	--urlbar-background-border-open: 1px solid var(--nept-separator-color);
+	--urlbar-background-border-radius: var(--border-radius-xlarge);
+	--urlbar-background-border-top-radius-open: var(--border-radius-xlarge);
+	--urlbar-background-box-shadow-open: var(--nept-small-shadow), var(--nept-menu-shadow);
+
+	> .urlbar-background {
+		background-color: var(--urlbar-background-color-focus) !important;
+		border: var(--urlbar-background-border-open) !important;
+		border-radius: var(--border-radius-xlarge) var(--border-radius-xlarge) 0 0 !important;
+		outline: none !important;
+		backdrop-filter: saturate(1) blur(3px) !important;
+		box-shadow: var(--urlbar-background-box-shadow-open) !important;
+	}
+
+	> .urlbarView:popover-open {
+		width: auto !important;
+		margin: var(--urlbarView-margin-block) var(--urlbarView-margin-inline) !important;
+
+		> .urlbarView-background {
+			backdrop-filter: saturate(1) blur(3px) !important;
+		}
+	}
+}
+
 @media (prefers-reduced-transparency: reduce) {
-	#navigator-toolbox:has(.urlbar[open]:popover-open) + #browser {
+	#urlbar-container > .urlbar[popover-open] {
+		--urlbar-background-color-focus: Canvas;
+
+		> .urlbar-background,
+		> .urlbarView:popover-open > .urlbarView-background {
+			backdrop-filter: none !important;
+		}
+	}
+
+	#navigator-toolbox:has(.urlbar[open]:popover-open, .urlbar[open] > .urlbarView:popover-open) + #browser {
 		backdrop-filter: none !important;
 	}
 
@@ -238,7 +275,18 @@
 }
 
 @media (forced-colors: active) {
-	#navigator-toolbox:has(.urlbar[open]:popover-open) + #browser {
+	#urlbar-container > .urlbar[popover-open] {
+		--urlbar-background-color-focus: Canvas;
+		--urlbar-background-border-open: 2px solid Highlight;
+		--urlbar-background-box-shadow-open: none;
+
+		> .urlbar-background,
+		> .urlbarView:popover-open > .urlbarView-background {
+			backdrop-filter: none !important;
+		}
+	}
+
+	#navigator-toolbox:has(.urlbar[open]:popover-open, .urlbar[open] > .urlbarView:popover-open) + #browser {
 		backdrop-filter: none !important;
 	}
 
