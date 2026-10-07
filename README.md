@@ -43,6 +43,7 @@ The active optional modules are declared near the top of `chrome/userChrome.css`
 - Retained the completed Firefox 155/156 compatibility work and adapted Firefox 157's separate URLbar results popover to Lucid's existing glass surfaces and solid accessibility fallbacks.
 - Restored Nova tab-group pale colors, current shadow/customization tokens, and autocomplete corner radius.
 - Corrected reduced-motion selector specificity for horizontal and vertical tabs.
+- Removed Nova's decorative accent rings from the open address field and suggestion rows while retaining selection feedback and forced-colors styling.
 - Passed the complete static import/asset audit, Stylelint, independent branch review, and 35 targeted Firefox 157.0.1 browser checks in a disposable profile.
 - This remains an untagged candidate. Visible remote-page blur, forced-colors rendering, sensitive form panels, and decoded-video/compositor performance still require acceptance. See the [verification report](docs/compatibility/2026-10-06-firefox-157-nova.md) for evidence and limits.
 

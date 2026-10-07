@@ -222,6 +222,12 @@
 	--urlbar-background-border-top-radius-open: var(--border-radius-xlarge);
 	--urlbar-background-box-shadow-open: var(--nept-small-shadow), var(--nept-menu-shadow);
 
+	/* Nova adds an accent outline inside the joint glass surface. */
+	@media not (forced-colors: active) {
+		--urlbar-input-container-outline-open: none !important;
+		--urlbar-input-container-outline-open-focused: none !important;
+	}
+
 	> .urlbar-background {
 		background-color: var(--urlbar-background-color-focus) !important;
 		border: var(--urlbar-background-border-open) !important;
@@ -339,6 +345,12 @@
 	> .urlbarView-row {
 		border: var(--button-border) !important;
 		border-radius: var(--border-radius-medium) !important;
+
+		/* Nova's generic button border is accent-colored. Keep row geometry and
+		 * selection feedback without outlining every suggestion. */
+		@media not (forced-colors: active) {
+			border-color: transparent !important;
+		}
 
 		> .urlbarView-row-inner {
 			flex-wrap: nowrap !important;
